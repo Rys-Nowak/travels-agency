@@ -1,0 +1,33 @@
+input {
+    border: 0;
+    border-bottom: 1px solid #777;
+    margin-left: 30px;
+}
+
+input:focus {
+    outline: 0;
+    border-bottom: 1px solid black;
+}
+
+.submit {
+    margin-left: 0;
+    margin-top: 20px;
+    border: inherit;
+    border-radius: 6px;
+    font-size: larger;
+}
+
+form {
+    padding-left: 80px;
+}
+
+.err-message {
+    color: red;
+    margin-left: 20px;
+    font-size: small;
+}
+
+h1 {
+    margin-bottom: 40px;
+    margin-top: 40px;
+}

@@ -1,0 +1,32 @@
+<div class="trips-container">
+    <div class="trip"
+        *ngFor="let trip of (trips | filter : countryFilter : costMinFilter : costMaxFilter : startFilter : endFilter)"
+        [ngClass]="{
+        'most-expensive': trip.cost >= getMaxCost(),
+        'least-expensive': trip.cost <= getMinCost()
+      }">
+        <img *ngIf="trip.img !== ''" class="trip-img" [src]="trip.img">
+        <div>
+            <h1>{{trip.name | uppercase}}</h1>
+            <h2>{{trip.country | uppercase}}</h2>
+            <p>{{trip.description}}</p>
+        </div>
+        <div class="data">
+            <app-rating></app-rating>
+            <p class="cost" (click)="switchCurrency()">Cost: {{convertCurrency(trip.cost)}}
+                {{currencies[currencyCounter]}}</p>
+            <p>Start date: {{trip.start}}</p>
+            <p>End date: {{trip.end}}</p>
+            <p *ngIf="trip.available" [ngStyle]="{
+                'color': trip.available <= 3 ? 'red' : 'inherit'
+              }">Available: {{trip.available}}</p>
+            <p *ngIf="!trip.available" style="color:red">Trip unavailable!</p>
+        </div>
+        <div class="buttons">
+            <input *ngIf="trip.available" class="add btn" type="button" value="+" (click)="reserveTrip(trip)">
+            <input *ngIf="trip.available !== trip.capacity" class="del btn" type="button" value="-"
+                (click)="cancelTrip(trip)">
+            <button (click)="removeTrip(trip)" class="btn"><img src="../../assets/trash.svg"></button>
+        </div>
+    </div>
+</div>

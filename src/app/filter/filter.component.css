@@ -1,0 +1,53 @@
+.filter-container {
+    padding-left: 30px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+img {
+    display: inline;
+}
+
+h2 {
+    padding-top: 10px;
+    padding-left: 30px;
+}
+
+select {
+    margin-bottom: 10px;
+    width: 15rem;
+    font-size: medium;
+    margin-right: 10px;
+    border-radius: 6px;
+    padding: 6px;
+    border: 0;
+    box-shadow: 0 0 4px 0 #888;
+    background-color: beige;
+}
+
+input {
+    margin-bottom: 10px;
+    width: 15rem;
+    margin-right: 10px;
+}
+
+input[type="date"] {
+    font-size: medium;
+    border-radius: 6px;
+    padding: 6px;
+    border: 0;
+    box-shadow: 0 0 4px 0 #888;
+    background-color: beige;
+}
+
+/* input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: beige;
+    cursor: pointer;
+    font-size: medium;
+    border-radius: 6px;
+    border: 0;
+    box-shadow: 0 0 4px 0 #888;
+} */

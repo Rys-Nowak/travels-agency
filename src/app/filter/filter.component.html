@@ -1,0 +1,26 @@
+<h2 (click)="switchFilters()">
+    Filters
+    <img *ngIf="!filtersOn" src="../../assets/chevron-down.svg">
+    <img *ngIf="filtersOn" src="../../assets/chevron-up.svg">
+</h2>
+<div class="filter-container" *ngIf="filtersOn">
+    Country:
+    <select [(ngModel)]="selectedCountry" (ngModelChange)="filterService.setCountry(selectedCountry)" name="countries"
+        id="countries">
+        <option value="All">All</option>
+        <option *ngFor="let country of filterService.getCountries()" [value]="country">{{country}}</option>
+    </select>
+    Rating:
+    <select name="rating" id="rating">
+        <option value="filterService.getAllRatings()">All</option>
+        <option *ngFor="let val of filterService.getAllRatings()" [value]="[val]">{{val}}</option>
+    </select>
+    Date from: <input [(ngModel)]="selectedStart" (ngModelChange)="filterService.setStart(selectedStart)" type="date">
+    Date to: <input [(ngModel)]="selectedEnd" (ngModelChange)="filterService.setEnd(selectedEnd)" type="date">
+    Price from: {{selectedCostMin ? selectedCostMin: filterService.getCostMin()}}
+    <input [(ngModel)]="selectedCostMin" (ngModelChange)="filterService.setCostMin(selectedCostMin)" type="range"
+        [min]="filterService.getCostMin()" [max]="filterService.getCostMax()">
+    Price to: {{selectedCostMax !== getInfinity() ? selectedCostMax: filterService.getCostMax()}}
+    <input [(ngModel)]="selectedCostMax" (ngModelChange)="filterService.setCostMax(selectedCostMax)" type="range"
+        [min]="filterService.getCostMin()" [max]="filterService.getCostMax()">
+</div>

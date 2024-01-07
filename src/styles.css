@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    font-family: Tahoma, sans-serif;
+}
+
+h1 {
+    font-size: x-large;
+}
+
+h2 {
+    color: #444;
+    font-size: larger;
+}
+
+.btn {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    font-size: x-large;
+}

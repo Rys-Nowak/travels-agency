@@ -1,0 +1,45 @@
+<form>
+    <h1>Add new trip</h1>
+    <p>
+        <span>Name</span>
+        <input [(ngModel)]="name" name="name">
+        <span class="err-message" *ngIf="!validateName()">Invalid name</span>
+    </p>
+    <p>
+        <span>Country</span>
+        <input [(ngModel)]="country" name="country">
+        <span class="err-message" *ngIf="!validateCountry()">Invalid country name</span>
+    </p>
+    <p>
+        <span>Start Date</span>
+        <input type="date" [(ngModel)]="start" name="start">
+    </p>
+    <p>
+        <span>End Date</span>
+        <input type="date" [(ngModel)]="end" name="end">
+        <span class="err-message" *ngIf="!validateEndDate()">End date has to be after start date</span>
+    </p>
+    <p>
+        <span>Price [PLN]</span>
+        <input [(ngModel)]="cost" type="number" name="cost">
+        <span class="err-message" *ngIf="!validateCost()">Invalid price</span>
+    </p>
+    <p>
+        <span>Number of free places</span>
+        <input [(ngModel)]="capacity" type="number" name="capacity">
+        <span class="err-message" *ngIf="!validateCapacity()">Invalid number</span>
+    </p>
+    <p>
+        <span>Description</span>
+        <input [(ngModel)]="description" name="description">
+        <span class="err-message" *ngIf="!validateDescription()">Invalid description</span>
+    </p>
+    <p>
+        <span>Image URL</span>
+        <input [(ngModel)]="img" name="img">
+        <span class="err-message" *ngIf="!validateUrl()">Invalid url</span>
+    </p>
+    <p>
+        <input (click)="addTrip()" type="submit" class="submit btn" value="Submit">
+    </p>
+</form>
