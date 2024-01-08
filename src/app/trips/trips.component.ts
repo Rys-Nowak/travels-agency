@@ -17,6 +17,8 @@ export class TripsComponent {
   costMaxFilter: number = this.filterService.getCostMax();
   startFilter: string = this.filterService.getEarliestStart();
   endFilter: string = this.filterService.getLatestEnd();
+  ratingFromFilter: number = this.filterService.getMinRating();
+  ratingToFilter: number = this.filterService.getMaxRating();
   trips: Trip[] = [];
 
   constructor(public tripsService: TripsService, public currencyService: CurrencyService, public filterService: FilterService) {
@@ -37,6 +39,14 @@ export class TripsComponent {
     })
     this.filterService.selectedEnd.subscribe((val) => {
       this.endFilter = val;
+    })
+    this.filterService.selectedRatingFrom.subscribe((val) => {
+      this.ratingFromFilter = val;
+      console.log("FROM: " + val);
+    })
+    this.filterService.selectedRatingTo.subscribe((val) => {
+      this.ratingToFilter = val;
+      console.log("TO: " + val);
     })
   }
 

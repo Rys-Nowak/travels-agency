@@ -17,7 +17,8 @@ export class FilterService {
   private costMax: number = Number.MAX_VALUE;
   private earliestStart: string = new Date().toLocaleDateString("pl");
   private latestEnd: string = new Date(Date.now() + 60000 * 60 * 24 * 365).toLocaleDateString("pl"); // + 1 year
-  selectedRatings: Subject<number[]> = new Subject();
+  selectedRatingFrom: Subject<number> = new Subject();
+  selectedRatingTo: Subject<number> = new Subject();
   selectedCostMin: Subject<number> = new Subject();
   selectedCostMax: Subject<number> = new Subject();
   selectedStart: Subject<string> = new Subject();
@@ -30,7 +31,8 @@ export class FilterService {
       this.trips = trips;
       this.setBounds(trips);
     })
-    this.selectedRatings.next(this.getAllRatings());
+    this.selectedRatingFrom.next(this.getMinRating());
+    this.selectedRatingTo.next(this.getMaxRating());
     this.selectedCountry.next("All");
     this.selectedCostMin.next(this.getCostMin());
     this.selectedCostMax.next(this.getCostMax());
@@ -48,6 +50,14 @@ export class FilterService {
     this.latestEnd = new Date(
       Math.max(...trips.map(el => parseDate(el.end)))
     ).toLocaleString('pl');
+  }
+
+  getMinRating() {
+    return this.trips.length ? Math.round(Math.min(...this.trips.map(el => el.rating))) : 0;
+  }
+
+  getMaxRating() {
+    return this.trips.length ? Math.round(Math.max(...this.trips.map(el => el.rating))) : 5;
   }
 
   getCountries() {
@@ -70,17 +80,8 @@ export class FilterService {
     return this.latestEnd;
   }
 
-  getAllRatings() {
-    return [
-      1, 2, 3, 4, 5
-    ]
-  }
-
   setCountry(country: string) {
     this.selectedCountry.next(country);
-  }
-  setRatings(ratings: number[]) {
-    this.selectedRatings.next(ratings);
   }
   setStart(start: string) {
     this.selectedStart.next(new Date(start).toLocaleDateString("pl"));
@@ -93,5 +94,11 @@ export class FilterService {
   }
   setCostMax(costMax: number) {
     this.selectedCostMax.next(costMax);
+  }
+  setRatingFrom(value: number) {
+    this.selectedRatingFrom.next(value);
+  }
+  setRatingTo(value: number) {
+    this.selectedRatingTo.next(value);
   }
 }

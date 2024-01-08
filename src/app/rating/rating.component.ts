@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { RatingService } from './rating.service';
 import { Trip } from '../trip';
+import { TripsService } from '../trips/trips.service';
 
 @Component({
   selector: 'app-rating',
@@ -8,72 +8,54 @@ import { Trip } from '../trip';
   styleUrl: './rating.component.css'
 })
 export class RatingComponent {
-  rating: number = 0;
-  ratingService: RatingService;
   @Input('trip') trip: Trip | null = null;
 
-  constructor(ratingService: RatingService) {
-    this.ratingService = ratingService;
+  constructor(private tripsService: TripsService) {
   }
 
-  setRating() {
-    // TODO
-  }
-
-  setFirst() {
-    this.rating = 1;
+  setRating(rate: number) {
+    if (this.trip) {
+      if (this.trip.rate) {
+        this.tripsService.removeRate(this.trip.id, this.trip.rate);
+      }
+      this.tripsService.addRate(this.trip.id, rate);
+    }
   }
 
   getFirstSrc() {
-    if (this.rating >= 1) {
+    if (this.trip && this.trip.rating >= 0.5) {
       return '../../assets/star-fill.svg'
     } else {
       return '../../assets/star.svg'
     }
-  }
-
-  setSecond() {
-    this.rating = 2;
   }
 
   getSecondSrc() {
-    if (this.rating >= 2) {
+    if (this.trip && this.trip.rating >= 1.5) {
       return '../../assets/star-fill.svg'
     } else {
       return '../../assets/star.svg'
     }
-  }
-
-  setThird() {
-    this.rating = 3;
   }
 
   getThirdSrc() {
-    if (this.rating >= 3) {
+    if (this.trip && this.trip.rating >= 2.5) {
       return '../../assets/star-fill.svg'
     } else {
       return '../../assets/star.svg'
     }
-  }
-
-  setFourth() {
-    this.rating = 4;
   }
 
   getFourthSrc() {
-    if (this.rating >= 4) {
+    if (this.trip && this.trip.rating >= 3.5) {
       return '../../assets/star-fill.svg'
     } else {
       return '../../assets/star.svg'
     }
   }
 
-  setFifth() {
-    this.rating = 5;
-  }
-
   getFifthSrc() {
-    if (this.rating >= 5) {
+    if (this.trip && this.trip.rating >= 4.5) {
       return '../../assets/star-fill.svg'
     } else {
       return '../../assets/star.svg'

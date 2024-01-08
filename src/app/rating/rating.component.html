@@ -1,5 +1,6 @@
-<img (click)="setFirst()" [src]="getFirstSrc()">
-<img (click)="setSecond()" [src]="getSecondSrc()">
-<img (click)="setThird()" [src]="getThirdSrc()">
-<img (click)="setFourth()" [src]="getFourthSrc()">
-<img (click)="setFifth()" [src]="getFifthSrc()">
+<img (click)="setRating(1)" [src]="getFirstSrc()">
+<img (click)="setRating(2)" [src]="getSecondSrc()">
+<img (click)="setRating(3)" [src]="getThirdSrc()">
+<img (click)="setRating(4)" [src]="getFourthSrc()">
+<img (click)="setRating(5)" [src]="getFifthSrc()">
+<span *ngIf="trip && trip.rate">({{trip.rate}})</span>

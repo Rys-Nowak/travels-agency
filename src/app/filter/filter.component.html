@@ -10,17 +10,18 @@
         <option value="All">All</option>
         <option *ngFor="let country of filterService.getCountries()" [value]="country">{{country}}</option>
     </select>
-    Rating:
-    <select name="rating" id="rating">
-        <option value="filterService.getAllRatings()">All</option>
-        <option *ngFor="let val of filterService.getAllRatings()" [value]="[val]">{{val}}</option>
-    </select>
     Date from: <input [(ngModel)]="selectedStart" (ngModelChange)="filterService.setStart(selectedStart)" type="date">
     Date to: <input [(ngModel)]="selectedEnd" (ngModelChange)="filterService.setEnd(selectedEnd)" type="date">
-    Price from: {{selectedCostMin ? selectedCostMin: filterService.getCostMin()}}
+    Price from: {{selectedCostMin}}
     <input [(ngModel)]="selectedCostMin" (ngModelChange)="filterService.setCostMin(selectedCostMin)" type="range"
         [min]="filterService.getCostMin()" [max]="filterService.getCostMax()">
-    Price to: {{selectedCostMax !== getInfinity() ? selectedCostMax: filterService.getCostMax()}}
+    Price to: {{selectedCostMax}}
     <input [(ngModel)]="selectedCostMax" (ngModelChange)="filterService.setCostMax(selectedCostMax)" type="range"
-        [min]="filterService.getCostMin()" [max]="filterService.getCostMax()">
+        [min]="selectedCostMin" [max]="filterService.getCostMax()">
+    <div>Rating from: {{selectedRatingFrom}} <img src="../../assets/star-fill.svg"></div>
+    <input type="range" (ngModelChange)="filterService.setRatingFrom(selectedRatingFrom)"
+        [(ngModel)]="selectedRatingFrom" [min]="filterService.getMinRating()" [max]="filterService.getMaxRating()">
+    <div>Rating to: {{selectedRatingTo}} <img src="../../assets/star-fill.svg"></div>
+    <input type="range" (ngModelChange)="filterService.setRatingTo(selectedRatingTo)" [(ngModel)]="selectedRatingTo"
+        [min]="selectedRatingFrom" [max]="filterService.getMaxRating()">
 </div>

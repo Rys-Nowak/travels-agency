@@ -74,6 +74,7 @@ export class AddformComponent {
   addTrip() {
     if (this.validateAll()) {
       const newTrip: Trip = {
+        id: Math.max(...this.tripsService.trips.map(el => el.id)) + 1,
         name: this.name,
         country: this.country,
         start: new Date(this.start).toLocaleDateString("pl"),
@@ -83,7 +84,9 @@ export class AddformComponent {
         description: this.description,
         img: this.img,
         available: this.capacity,
-        rating: 0
+        rating: 0,
+        ratingsCount: 0,
+        rate: 0
       };
       this.tripsService.addTrip(newTrip);
       this.router.navigate(['trips']);

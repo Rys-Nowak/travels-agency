@@ -8,7 +8,8 @@ import { TripsService } from '../trips/trips.service';
   styleUrl: './filter.component.css'
 })
 export class FilterComponent {
-  selectedRatings: number[];
+  selectedRatingFrom: number;
+  selectedRatingTo: number;
   selectedCostMin: number;
   selectedCostMax: number;
   selectedStart: string;
@@ -17,11 +18,20 @@ export class FilterComponent {
   filtersOn: boolean = false
 
   constructor(public filterService: FilterService, public tripsService: TripsService) {
-    this.selectedRatings = this.filterService.getAllRatings();
+    this.selectedRatingFrom = this.filterService.getMinRating();
+    this.selectedRatingTo = this.filterService.getMaxRating();
     this.selectedCostMin = this.filterService.getCostMin();
     this.selectedCostMax = this.filterService.getCostMax();
     this.selectedStart = this.filterService.getEarliestStart();
     this.selectedEnd = this.filterService.getLatestEnd();
+    this.tripsService.tripsSubject.subscribe(() => {
+      this.selectedRatingFrom = this.filterService.getMinRating();
+      this.selectedRatingTo = this.filterService.getMaxRating();
+      this.selectedCostMin = this.filterService.getCostMin();
+      this.selectedCostMax = this.filterService.getCostMax();
+      this.selectedStart = this.filterService.getEarliestStart();
+      this.selectedEnd = this.filterService.getLatestEnd();
+    });
   }
 
   getInfinity() {

@@ -1,5 +1,6 @@
 [
   {
+    "id": 0,
     "name": "Greece cruise",
     "country": "Greece",
     "start": "1.05.2024",
@@ -7,9 +8,12 @@
     "cost": 4000,
     "capacity": 8,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://www.myglobalviewpoint.com/wp-content/uploads/2023/08/Most-Beautiful-Places-in-Greece-Featured-Image.jpg"
+    "img": "https://www.myglobalviewpoint.com/wp-content/uploads/2023/08/Most-Beautiful-Places-in-Greece-Featured-Image.jpg",
+    "rating": 4.5,
+    "ratingsCount": 1
   },
   {
+    "id": 1,
     "name": "Week in Crotia",
     "country": "Crotia",
     "start": "02.05.2024",
@@ -17,9 +21,12 @@
     "cost": 2000,
     "capacity": 15,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://static.independent.co.uk/2023/06/27/17/iStock-487277594.jpg"
+    "img": "https://static.independent.co.uk/2023/06/27/17/iStock-487277594.jpg",
+    "rating": 3,
+    "ratingsCount": 1
   },
   {
+    "id": 2,
     "name": "See Budapest!",
     "country": "Hungary",
     "start": "06.05.2024",
@@ -27,9 +34,12 @@
     "cost": 800,
     "capacity": 12,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://www.budapest.org/en/wp-content/uploads/sites/101/budapest-danube-panorama.jpg"
+    "img": "https://www.budapest.org/en/wp-content/uploads/sites/101/budapest-danube-panorama.jpg",
+    "rating": 0,
+    "ratingsCount": 0
   },
   {
+    "id": 3,
     "name": "Warsaw",
     "country": "Poland",
     "start": "01.05.2024",
@@ -37,9 +47,12 @@
     "cost": 200,
     "capacity": 30,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://warsawtour.pl/wp-content/uploads/2023/03/Panorama-Warszawy-z-Widok-Towers-fot.-Filip-Kwiatkowski-1.jpg"
+    "img": "https://warsawtour.pl/wp-content/uploads/2023/03/Panorama-Warszawy-z-Widok-Towers-fot.-Filip-Kwiatkowski-1.jpg",
+    "rating": 0,
+    "ratingsCount": 0
   },
   {
+    "id": 4,
     "name": "Greece cruise",
     "country": "Greece",
     "start": "01.05.2024",
@@ -47,9 +60,12 @@
     "cost": 3000,
     "capacity": 40,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://www.myglobalviewpoint.com/wp-content/uploads/2023/08/Most-Beautiful-Places-in-Greece-Featured-Image.jpg"
+    "img": "https://www.myglobalviewpoint.com/wp-content/uploads/2023/08/Most-Beautiful-Places-in-Greece-Featured-Image.jpg",
+    "rating": 0,
+    "ratingsCount": 0
   },
   {
+    "id": 5,
     "name": "Week in Crotia",
     "country": "Crotia",
     "start": "02.05.2024",
@@ -57,9 +73,12 @@
     "cost": 1500,
     "capacity": 15,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://static.independent.co.uk/2023/06/27/17/iStock-487277594.jpg"
+    "img": "https://static.independent.co.uk/2023/06/27/17/iStock-487277594.jpg",
+    "rating": 0,
+    "ratingsCount": 0
   },
   {
+    "id": 6,
     "name": "Greece cruise",
     "country": "Greece",
     "start": "01.05.2024",
@@ -67,9 +86,12 @@
     "cost": 3000,
     "capacity": 8,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://www.myglobalviewpoint.com/wp-content/uploads/2023/08/Most-Beautiful-Places-in-Greece-Featured-Image.jpg"
+    "img": "https://www.myglobalviewpoint.com/wp-content/uploads/2023/08/Most-Beautiful-Places-in-Greece-Featured-Image.jpg",
+    "rating": 0,
+    "ratingsCount": 0
   },
   {
+    "id": 7,
     "name": "Week in Crotia",
     "country": "Crotia",
     "start": "02.05.2024",
@@ -77,9 +99,12 @@
     "cost": 2000,
     "capacity": 15,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://static.independent.co.uk/2023/06/27/17/iStock-487277594.jpg"
+    "img": "https://static.independent.co.uk/2023/06/27/17/iStock-487277594.jpg",
+    "rating": 0,
+    "ratingsCount": 0
   },
   {
+    "id": 8,
     "name": "Greece cruise",
     "country": "Greece",
     "start": "01.05.2024",
@@ -87,9 +112,12 @@
     "cost": 3000,
     "capacity": 8,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://www.myglobalviewpoint.com/wp-content/uploads/2023/08/Most-Beautiful-Places-in-Greece-Featured-Image.jpg"
+    "img": "https://www.myglobalviewpoint.com/wp-content/uploads/2023/08/Most-Beautiful-Places-in-Greece-Featured-Image.jpg",
+    "rating": 0,
+    "ratingsCount": 0
   },
   {
+    "id": 9,
     "name": "Week in Crotia",
     "country": "Crotia",
     "start": "02.05.2024",
@@ -97,6 +125,8 @@
     "cost": 2000,
     "capacity": 15,
     "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita ex ad repellendus architecto nobis, quis excepturi! Harum molestias ipsum sit eligendi impedit fugiat, suscipit odio odit optio ad. Earum, exercitationem!",
-    "img": "https://static.independent.co.uk/2023/06/27/17/iStock-487277594.jpg"
+    "img": "https://static.independent.co.uk/2023/06/27/17/iStock-487277594.jpg",
+    "rating": 0,
+    "ratingsCount": 0
   }
 ]
