@@ -12,11 +12,11 @@
     </p>
     <p>
         <span>Start Date</span>
-        <input type="date" [(ngModel)]="start" name="start">
+        <input type="date" [(ngModel)]="start" (ngModelChange)="convertStart($event)" name="start">
     </p>
     <p>
         <span>End Date</span>
-        <input type="date" [(ngModel)]="end" name="end">
+        <input type="date" [(ngModel)]="end" (ngModelChange)="convertEnd($event)" name="end">
         <span class="err-message" *ngIf="!validateEndDate()">End date has to be after start date</span>
     </p>
     <p>

@@ -1,0 +1,26 @@
+.container {
+    padding: 20px;
+    padding-left: 250px;
+    padding-right: 250px;
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 20px;
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+}
+
+img {
+    box-shadow: 2px 2px 15px 2px #888;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.nav-item {
+    cursor: pointer;
+}

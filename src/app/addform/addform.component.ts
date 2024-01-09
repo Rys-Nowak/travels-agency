@@ -94,4 +94,11 @@ export class AddformComponent {
       alert("Invalid data");
     }
   }
+
+  convertStart(date: string) {
+    this.start = new Date(date).toLocaleDateString("pl");
+  }
+  convertEnd(date: string) {
+    this.end = new Date(date).toLocaleDateString("pl");
+  }
 }
