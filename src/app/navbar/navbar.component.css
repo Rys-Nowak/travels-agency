@@ -26,4 +26,15 @@ nav {
     align-self: right;
     padding-right: 50px;
     padding-left: 30px;
+    display: flex;
+
+}
+
+a {
+    margin-left: 5px;
+}
+
+a:hover,a:focus {
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -10,14 +10,15 @@
             </div>
             <div class="data">
                 <p class="cost">Cost:
-                    <!-- {{convertCurrency(trip.cost)}}
-                {{currencies[currencyCounter]}} -->
+                    {{currencyService.convertCurrency(trip.cost)}}
+                    {{currencyService.currency}}
                 </p>
                 <p>Start date: {{trip.start}}</p>
                 <p>End date: {{trip.end}}</p>
             </div>
             <div class="buttons">
-                <input *ngIf="isTripAvailable(trip.id)" class="add btn" type="button" value="+" (click)="reserveTrip(trip)">
+                <input *ngIf="isTripAvailable(trip.id)" class="add btn" type="button" value="+"
+                    (click)="reserveTrip(trip)">
                 <input *ngIf="trip.available !== trip.capacity" class="del btn" type="button" value="-"
                     (click)="cancelTrip(trip)">
             </div>

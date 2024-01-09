@@ -1,12 +1,13 @@
 <div class="main-container">
     <nav>
         <p class="nav-item" routerLink="/home">Home</p>
-        <p class="nav-item" routerLink="/trips">All Trips</p>
+        <!-- <p class="nav-item" routerLink="/trips">All Trips</p> -->
         <p class="nav-item" routerLink="/add">Add New Trip</p>
         <p class="nav-item" routerLink="/cart">Cart</p>
     </nav>
     <div class="widget">
         <app-info></app-info>
+        <p><a class="currency" (click)="currencyService.switchCurrency()">{{currencyService.currency}}</a></p>
     </div>
 </div>
 <hr>

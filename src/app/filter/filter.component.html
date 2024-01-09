@@ -12,10 +12,10 @@
     </select>
     Date from: <input [(ngModel)]="selectedStart" (ngModelChange)="filterService.setStart(selectedStart)" type="date">
     Date to: <input [(ngModel)]="selectedEnd" (ngModelChange)="filterService.setEnd(selectedEnd)" type="date">
-    Price from: {{selectedCostMin}}
+    Price from: {{convertCurrency(selectedCostMin)}}
     <input [(ngModel)]="selectedCostMin" (ngModelChange)="filterService.setCostMin(selectedCostMin)" type="range"
         [min]="filterService.getCostMin()" [max]="filterService.getCostMax()">
-    Price to: {{selectedCostMax}}
+    Price to: {{convertCurrency(selectedCostMax)}}
     <input [(ngModel)]="selectedCostMax" (ngModelChange)="filterService.setCostMax(selectedCostMax)" type="range"
         [min]="selectedCostMin" [max]="filterService.getCostMax()">
     <div>Rating from: {{selectedRatingFrom}} <img src="../../assets/star-fill.svg"></div>

@@ -4,6 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CurrencyService {
+  currencyCounter: number = 0;
+  currency: string = "PLN";
+  currencies: string[] = ['PLN', 'USD', 'EUR', 'GBP'];
+
   convertPln(value: number, currency: string) {
     switch (currency) {
       case 'PLN':
@@ -29,5 +33,15 @@ export class CurrencyService {
 
   convertPlnToEur(value: number) {
     return value * 0.23;
+  }
+
+  convertCurrency(value: number) {
+    return this.convertPln(value, this.currencies[this.currencyCounter])
+  }
+
+  switchCurrency() {
+    ++this.currencyCounter;
+    this.currencyCounter %= 4;
+    this.currency = this.currencies[this.currencyCounter];
   }
 }

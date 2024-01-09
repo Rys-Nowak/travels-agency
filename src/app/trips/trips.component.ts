@@ -11,8 +11,6 @@ import { CartService } from '../cart/cart.service';
   styleUrl: './trips.component.css'
 })
 export class TripsComponent implements OnInit {
-  currencyCounter: number = 0;
-  currencies: string[] = ['PLN', 'USD', 'EUR', 'GBP'];
   countryFilter: string = "All";
   costMinFilter: number = this.filterService.getCostMin();
   costMaxFilter: number = this.filterService.getCostMax();
@@ -66,15 +64,6 @@ export class TripsComponent implements OnInit {
 
   getMinCost() {
     return Math.min(...this.trips.map(e => e.cost))
-  }
-
-  convertCurrency(value: number) {
-    return this.currencyService.convertPln(value, this.currencies[this.currencyCounter])
-  }
-
-  switchCurrency() {
-    ++this.currencyCounter;
-    this.currencyCounter %= 4;
   }
 
   removeTrip(trip: Trip) {

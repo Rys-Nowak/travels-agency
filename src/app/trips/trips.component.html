@@ -13,8 +13,8 @@
         </div>
         <div class="data">
             <app-rating [trip]="trip"></app-rating>
-            <p class="cost" (click)="switchCurrency()">Cost: {{convertCurrency(trip.cost)}}
-                {{currencies[currencyCounter]}}</p>
+            <p class="cost">Cost: {{currencyService.convertCurrency(trip.cost)}}
+                {{currencyService.currency}}</p>
             <p>Start date: {{trip.start}}</p>
             <p>End date: {{trip.end}}</p>
             <p *ngIf="trip.available" [ngStyle]="{

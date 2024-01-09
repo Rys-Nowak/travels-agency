@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FilterService } from './filter.service';
 import { TripsService } from '../trips/trips.service';
+import { CurrencyService } from '../currency.service';
 
 @Component({
   selector: 'app-filter',
@@ -17,7 +18,7 @@ export class FilterComponent {
   selectedCountry: string = "All";
   filtersOn: boolean = false
 
-  constructor(public filterService: FilterService, public tripsService: TripsService) {
+  constructor(public filterService: FilterService, public tripsService: TripsService, private currencyService: CurrencyService) {
     this.selectedRatingFrom = this.filterService.getMinRating();
     this.selectedRatingTo = this.filterService.getMaxRating();
     this.selectedCostMin = this.filterService.getCostMin();
@@ -40,5 +41,9 @@ export class FilterComponent {
 
   switchFilters() {
     this.filtersOn = !this.filtersOn;
+  }
+
+  convertCurrency(val: number) {
+    return Math.round(this.currencyService.convertCurrency(val))
   }
 }

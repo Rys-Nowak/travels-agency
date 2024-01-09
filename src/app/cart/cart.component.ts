@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CartService } from './cart.service';
 import { Trip } from '../trip';
 import { TripsService } from '../trips/trips.service';
+import { CurrencyService } from '../currency.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +13,7 @@ export class CartComponent {
   trips: Trip[] = this.cartService.reservedTrips;
   totalValue: number;
 
-  constructor(private cartService: CartService, private tripsService: TripsService) {
+  constructor(private cartService: CartService, private tripsService: TripsService, public currencyService: CurrencyService) {
     this.totalValue = this.calculateTotalValue();
     this.cartService.reservedTripsSubject.subscribe((value) => {
       this.totalValue = this.calculateTotalValue();
@@ -51,7 +52,7 @@ export class CartComponent {
 
   buyTrips() {
     if (this.cartService.checkedTrips.length) {
-      alert(`You successfully bought ${this.cartService.checkedTrips.length} trips of total value ${this.totalValue} TODO!`);
+      alert(`You successfully bought ${this.cartService.checkedTrips.length} trips of total value ${this.currencyService.convertCurrency(this.totalValue)} ${this.currencyService.currency}!`);
       this.cartService.buyTrips();
       this.cartService.checkAll();
       this.totalValue = this.calculateTotalValue();
