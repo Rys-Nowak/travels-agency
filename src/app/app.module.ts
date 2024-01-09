@@ -14,6 +14,7 @@ import { RatingComponent } from './rating/rating.component';
 import { FilterComponent } from './filter/filter.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FilterPipe } from './filter/filter.pipe';
+import { InfoComponent } from './info/info.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { FilterPipe } from './filter/filter.pipe';
     RatingComponent,
     FilterComponent,
     FilterPipe,
+    InfoComponent,
   ],
   imports: [
     BrowserModule,

@@ -24,7 +24,7 @@ export class FilterService {
   selectedStart: Subject<string> = new Subject();
   selectedEnd: Subject<string> = new Subject();
   selectedCountry: Subject<string> = new Subject();
-  trips: Trip[] = []
+  trips: Trip[] = this.tripsService.trips;
 
   constructor(private tripsService: TripsService) {
     this.tripsService.tripsSubject.subscribe((trips) => {

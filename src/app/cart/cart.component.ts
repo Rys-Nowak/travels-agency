@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { CartService } from './cart.service';
+import { Trip } from '../trip';
+import { TripsService } from '../trips/trips.service';
 
 @Component({
   selector: 'app-cart',
@@ -6,5 +9,55 @@ import { Component } from '@angular/core';
   styleUrl: './cart.component.css'
 })
 export class CartComponent {
+  trips: Trip[] = this.cartService.reservedTrips;
+  totalValue: number;
 
+  constructor(private cartService: CartService, private tripsService: TripsService) {
+    this.totalValue = this.calculateTotalValue();
+    this.cartService.reservedTripsSubject.subscribe((value) => {
+      this.totalValue = this.calculateTotalValue();
+      this.trips = value;
+    })
+  }
+
+  handleCheckbox(event: any, trip: Trip) {
+    if (event.target?.checked) {
+      this.cartService.checkTrip(trip);
+    } else {
+      this.cartService.unCheckTrip(trip);
+    }
+    this.totalValue = this.calculateTotalValue();
+  }
+
+  isTripAvailable(tripId: number) {
+    return this.tripsService.isAvailable(tripId);
+  }
+
+  reserveTrip(trip: Trip) {
+    this.tripsService.reserveTrip(trip.id);
+  }
+
+  cancelTrip(trip: Trip) {
+    this.tripsService.cancelTrip(trip.id);
+  }
+
+  private calculateTotalValue() {
+    let totalValue = 0;
+    for (const cost of this.cartService.checkedTrips.map(el => el.cost)) {
+      totalValue += cost;
+    }
+    return totalValue;
+  }
+
+  buyTrips() {
+    if (this.cartService.checkedTrips.length) {
+      alert(`You successfully bought ${this.cartService.checkedTrips.length} trips of total value ${this.totalValue} TODO!`);
+      this.cartService.buyTrips();
+      this.cartService.checkAll();
+      this.totalValue = this.calculateTotalValue();
+    }
+    else {
+      alert("No trips to buy!");
+    }
+  }
 }

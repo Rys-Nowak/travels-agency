@@ -15,7 +15,7 @@
     text-decoration: underline;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     .trip-img {
         align-self: center;
     }
@@ -53,4 +53,11 @@
 
 .least-expensive {
     box-shadow: 2px 2px 25px 2px #ff0a0a;
+}
+
+.btn {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    font-size: x-large;
 }

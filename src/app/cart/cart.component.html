@@ -1,1 +1,31 @@
-<p>cart works!</p>
+<div class="trips-container" *ngIf="trips.length">
+    <div class="card-container" *ngFor="let trip of trips">
+        <input (change)="handleCheckbox($event, trip)" type="checkbox" checked>
+        <div class="trip">
+            <img *ngIf="trip.img !== ''" class="trip-img" [src]="trip.img">
+            <div>
+                <h1>{{trip.name | uppercase}}</h1>
+                <h2>{{trip.country | uppercase}}</h2>
+                <p>{{trip.description}}</p>
+            </div>
+            <div class="data">
+                <p class="cost">Cost:
+                    <!-- {{convertCurrency(trip.cost)}}
+                {{currencies[currencyCounter]}} -->
+                </p>
+                <p>Start date: {{trip.start}}</p>
+                <p>End date: {{trip.end}}</p>
+            </div>
+            <div class="buttons">
+                <input *ngIf="isTripAvailable(trip.id)" class="add btn" type="button" value="+" (click)="reserveTrip(trip)">
+                <input *ngIf="trip.available !== trip.capacity" class="del btn" type="button" value="-"
+                    (click)="cancelTrip(trip)">
+            </div>
+        </div>
+    </div>
+    <span class="message">Cost of your trips: <b>{{totalValue}}</b></span>
+    <input (click)="buyTrips()" type="button" class="btn buy" value="Buy trips!">
+</div>
+<div class="trips-container" *ngIf="!trips.length">
+    <span class="message">Your cart is empty</span>
+</div>

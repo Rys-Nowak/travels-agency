@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Trip } from '../trip';
 import { TripsService } from './trips.service';
 import { CurrencyService } from '../currency.service';
 import { FilterService } from '../filter/filter.service';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'app-trips',
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css'
 })
-export class TripsComponent {
+export class TripsComponent implements OnInit {
   currencyCounter: number = 0;
   currencies: string[] = ['PLN', 'USD', 'EUR', 'GBP'];
   countryFilter: string = "All";
@@ -19,9 +20,12 @@ export class TripsComponent {
   endFilter: string = this.filterService.getLatestEnd();
   ratingFromFilter: number = this.filterService.getMinRating();
   ratingToFilter: number = this.filterService.getMaxRating();
-  trips: Trip[] = [];
+  trips: Trip[] = this.tripsService.trips;
 
-  constructor(public tripsService: TripsService, public currencyService: CurrencyService, public filterService: FilterService) {
+  constructor(public tripsService: TripsService, public currencyService: CurrencyService, public filterService: FilterService, public cartService: CartService) {
+  }
+
+  ngOnInit(): void {
     this.tripsService.tripsSubject.subscribe((trips) => {
       this.trips = trips;
     })
@@ -42,20 +46,18 @@ export class TripsComponent {
     })
     this.filterService.selectedRatingFrom.subscribe((val) => {
       this.ratingFromFilter = val;
-      console.log("FROM: " + val);
     })
     this.filterService.selectedRatingTo.subscribe((val) => {
       this.ratingToFilter = val;
-      console.log("TO: " + val);
     })
   }
 
   reserveTrip(trip: Trip) {
-    if (trip.available > 0) --trip.available;
+    this.tripsService.reserveTrip(trip.id);
   }
 
   cancelTrip(trip: Trip) {
-    if (trip.capacity > trip.available) ++trip.available;
+    this.tripsService.cancelTrip(trip.id);
   }
 
   getMaxCost() {
