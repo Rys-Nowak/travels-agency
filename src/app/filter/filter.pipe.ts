@@ -8,9 +8,9 @@ function parseDate(dateString: string) {
 
 @Pipe({ name: 'filter' })
 export class FilterPipe implements PipeTransform {
-  transform(trips: Trip[], country: string, costMin: number, costMax: number, start: string, end: string, ratingFrom: number, ratingTo: number): Trip[] {
+  transform(trips: Trip[], countries: string[], costMin: number, costMax: number, start: string, end: string, ratingFrom: number, ratingTo: number): Trip[] {
     return trips.filter((trip: Trip) => {
-      if (country !== "All" && trip.country !== country) return false;
+      if (!countries.includes(trip.country)) return false;
       if (trip.cost > costMax || trip.cost < costMin) return false;
       if (parseDate(trip.start) < parseDate(start)) return false;
       if (parseDate(trip.end) > parseDate(end)) return false;

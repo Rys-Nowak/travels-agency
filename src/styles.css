@@ -1,12 +1,14 @@
 body {
     font-family: Tahoma, sans-serif;
+    background-color: #E5FFDE;
 }
 
 h1 {
+    color: #18020C;
     font-size: x-large;
 }
 
 h2 {
-    color: #444;
+    color: #634B66;
     font-size: larger;
 }

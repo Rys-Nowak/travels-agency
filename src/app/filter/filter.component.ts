@@ -15,8 +15,9 @@ export class FilterComponent {
   selectedCostMax: number;
   selectedStart: string;
   selectedEnd: string;
-  selectedCountry: string = "All";
   filtersOn: boolean = false
+  countries: string[] = this.filterService.getCountries();
+  selectedCountries: string[] = structuredClone(this.countries)
 
   constructor(public filterService: FilterService, public tripsService: TripsService, private currencyService: CurrencyService) {
     this.selectedRatingFrom = this.filterService.getMinRating();
@@ -32,7 +33,11 @@ export class FilterComponent {
       this.selectedCostMax = this.filterService.getCostMax();
       this.selectedStart = this.filterService.getEarliestStart();
       this.selectedEnd = this.filterService.getLatestEnd();
+      this.countries = this.filterService.getCountries();
     });
+    this.filterService.selectedCountries.subscribe((val) => {
+      this.selectedCountries = val;
+    })
   }
 
   getInfinity() {
@@ -45,5 +50,15 @@ export class FilterComponent {
 
   convertCurrency(val: number) {
     return Math.round(this.currencyService.convertCurrency(val))
+  }
+
+  handleCheck(event: any, country: string) {
+    if (event.target?.checked) {
+      this.filterService.setCountries([...new Set([...this.selectedCountries, country])]);
+    } else {
+      let countries = structuredClone(this.selectedCountries);
+      countries.splice(countries.indexOf(country), 1)
+      this.filterService.setCountries(countries);
+    }
   }
 }

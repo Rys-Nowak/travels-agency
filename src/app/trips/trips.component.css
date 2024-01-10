@@ -1,7 +1,7 @@
 .trip {
-    background-color: beige;
+    background-color: #E5FFDE;
     border-radius: 8px;
-    box-shadow: 2px 2px 15px 2px #888;
+    box-shadow: 2px 2px 15px 2px #9590A8;
     padding: 15px;
     display: flex;
     gap: 20px;

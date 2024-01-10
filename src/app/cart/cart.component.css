@@ -9,9 +9,9 @@ input[type="checkbox"] {
 }
 
 .trip {
-    background-color: rgb(243, 243, 201);
+    background-color: #BBCBCB;
     border-radius: 8px;
-    box-shadow: 2px 2px 15px 2px #888;
+    box-shadow: 2px 2px 15px 2px #9590A8;
     padding: 15px;
     display: flex;
     gap: 20px;
@@ -44,6 +44,20 @@ input[type="checkbox"] {
     font-size: xx-large;
 }
 
+.buy {
+    margin-left: 0;
+    margin-top: 20px;
+    border: inherit;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: larger;
+    background-color: #9590A8;
+}
+
+.buy:hover {
+    outline: solid 2px #634B66;
+}
+
 .data {
     min-width: 200px;
     font-size: larger;
@@ -59,10 +73,6 @@ input[type="checkbox"] {
     height: 300px;
     object-fit: cover;
 
-}
-.buy {
-    padding: 10px;
-    font-size: larger;
 }
 
 .message {

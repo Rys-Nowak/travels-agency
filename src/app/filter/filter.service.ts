@@ -23,7 +23,7 @@ export class FilterService {
   selectedCostMax: Subject<number> = new Subject();
   selectedStart: Subject<string> = new Subject();
   selectedEnd: Subject<string> = new Subject();
-  selectedCountry: Subject<string> = new Subject();
+  selectedCountries: Subject<string[]> = new Subject();
   trips: Trip[] = this.tripsService.trips;
 
   constructor(private tripsService: TripsService) {
@@ -33,7 +33,7 @@ export class FilterService {
     })
     this.selectedRatingFrom.next(this.getMinRating());
     this.selectedRatingTo.next(this.getMaxRating());
-    this.selectedCountry.next("All");
+    this.selectedCountries.next(this.getCountries());
     this.selectedCostMin.next(this.getCostMin());
     this.selectedCostMax.next(this.getCostMax());
     this.selectedStart.next(this.getEarliestStart());
@@ -42,6 +42,7 @@ export class FilterService {
 
   setBounds(trips: Trip[]) {
     this.countries = [...new Set(trips.map((el) => el.country))];
+    this.selectedCountries.next(this.countries);
     this.costMin = Math.min(...trips.map(el => el.cost));
     this.costMax = Math.max(...trips.map(el => el.cost));
     this.earliestStart = new Date(
@@ -80,8 +81,8 @@ export class FilterService {
     return this.latestEnd;
   }
 
-  setCountry(country: string) {
-    this.selectedCountry.next(country);
+  setCountries(countries: string[]) {
+    this.selectedCountries.next(countries);
   }
   setStart(start: string) {
     this.selectedStart.next(new Date(start).toLocaleDateString("pl"));

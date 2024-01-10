@@ -4,12 +4,13 @@
     <img *ngIf="filtersOn" src="../../assets/chevron-up.svg">
 </h2>
 <div class="filter-container" *ngIf="filtersOn">
-    Country:
-    <select [(ngModel)]="selectedCountry" (ngModelChange)="filterService.setCountry(selectedCountry)" name="countries"
-        id="countries">
-        <option value="All">All</option>
-        <option *ngFor="let country of filterService.getCountries()" [value]="country">{{country}}</option>
-    </select>
+    Countries:
+    <div class="country-container">
+        <div class="country" *ngFor="let country of countries">
+            <span>{{country}}</span>
+        <input type="checkbox" checked (click)="handleCheck($event, country)" (ngModelChange)="filterService.setCountries(selectedCountries)">
+        </div>
+    </div>
     Date from: <input [(ngModel)]="selectedStart" (ngModelChange)="filterService.setStart(selectedStart)" type="date">
     Date to: <input [(ngModel)]="selectedEnd" (ngModelChange)="filterService.setEnd(selectedEnd)" type="date">
     Price from: {{convertCurrency(selectedCostMin)}}

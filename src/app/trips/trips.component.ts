@@ -11,7 +11,7 @@ import { CartService } from '../cart/cart.service';
   styleUrl: './trips.component.css'
 })
 export class TripsComponent implements OnInit {
-  countryFilter: string = "All";
+  countriesFilter: string[] = this.filterService.getCountries();
   costMinFilter: number = this.filterService.getCostMin();
   costMaxFilter: number = this.filterService.getCostMax();
   startFilter: string = this.filterService.getEarliestStart();
@@ -19,16 +19,25 @@ export class TripsComponent implements OnInit {
   ratingFromFilter: number = this.filterService.getMinRating();
   ratingToFilter: number = this.filterService.getMaxRating();
   trips: Trip[] = this.tripsService.trips;
+  currentPage = 1;
+  itemsPerPage = 4;
+  totalItems = this.tripsService.trips.length;
 
   constructor(public tripsService: TripsService, public currencyService: CurrencyService, public filterService: FilterService, public cartService: CartService) {
   }
 
+  onPageChange(page: number) {
+    this.currentPage = page;
+    console.log(this.tripsService.trips);
+    this.trips = this.tripsService.trips.slice((page - 1) * this.itemsPerPage, page * this.itemsPerPage);
+  }
+
   ngOnInit(): void {
     this.tripsService.tripsSubject.subscribe((trips) => {
-      this.trips = trips;
+      this.trips = trips.slice((this.currentPage - 1) * this.itemsPerPage, this.itemsPerPage);
     })
-    this.filterService.selectedCountry.subscribe((val) => {
-      this.countryFilter = val;
+    this.filterService.selectedCountries.subscribe((val) => {
+      this.countriesFilter = val;
     })
     this.filterService.selectedCostMin.subscribe((val) => {
       this.costMinFilter = val;
@@ -48,6 +57,12 @@ export class TripsComponent implements OnInit {
     this.filterService.selectedRatingTo.subscribe((val) => {
       this.ratingToFilter = val;
     })
+    this.filterService.selectedCountries.subscribe((val) => {
+      this.countriesFilter = val;
+    });
+    this.filterService.selectedCountries.subscribe((val) => {
+      this.countriesFilter = val;
+    });
   }
 
   reserveTrip(trip: Trip) {
@@ -59,11 +74,11 @@ export class TripsComponent implements OnInit {
   }
 
   getMaxCost() {
-    return Math.max(...this.trips.map(e => e.cost))
+    return Math.max(...this.tripsService.trips.map(e => e.cost))
   }
 
   getMinCost() {
-    return Math.min(...this.trips.map(e => e.cost))
+    return Math.min(...this.tripsService.trips.map(e => e.cost))
   }
 
   removeTrip(trip: Trip) {

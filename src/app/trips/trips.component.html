@@ -1,7 +1,10 @@
 <app-filter></app-filter>
+
 <div class="trips-container">
+    <app-pagination [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
     <div class="trip"
-        *ngFor="let trip of (trips | filter : countryFilter : costMinFilter : costMaxFilter : startFilter : endFilter : ratingFromFilter : ratingToFilter)"
+        *ngFor="let trip of (trips | filter : countriesFilter : costMinFilter : costMaxFilter : startFilter : endFilter : ratingFromFilter : ratingToFilter)"
         [ngClass]="{
         'most-expensive': trip.cost >= getMaxCost(),
         'least-expensive': trip.cost <= getMinCost()
@@ -25,8 +28,8 @@
         </div>
         <div class="buttons">
             <input *ngIf="trip.available" class="add btn" type="button" value="+" (click)="reserveTrip(trip)">
-            <input *ngIf="trip.available !== trip.capacity && cartService.isInCart(trip.id)" class="del btn" type="button" value="-"
-                (click)="cancelTrip(trip)">
+            <input *ngIf="trip.available !== trip.capacity && cartService.isInCart(trip.id)" class="del btn"
+                type="button" value="-" (click)="cancelTrip(trip)">
             <button (click)="removeTrip(trip)" class="btn"><img src="../../assets/trash.svg"></button>
         </div>
     </div>
