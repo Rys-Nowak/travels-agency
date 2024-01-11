@@ -30,7 +30,7 @@ export class CartComponent {
     this.totalValue = this.calculateTotalValue();
   }
 
-  isTripAvailable(tripId: number) {
+  isTripAvailable(tripId: string) {
     return this.tripsService.isAvailable(tripId);
   }
 

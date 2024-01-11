@@ -34,7 +34,7 @@ export class TripsService {
     this.tripsSubject.next(trips);
   }
 
-  removeRate(tripId: number, rate: number): number {
+  removeRate(tripId: string, rate: number): number {
     let trips = structuredClone(this.trips);
     const tripIndex = trips.findIndex(el => el.id === tripId);
     let newRating;
@@ -50,7 +50,7 @@ export class TripsService {
     return newRating;
   }
 
-  addRate(tripId: number, rate: number): number {
+  addRate(tripId: string, rate: number): number {
     let trips = structuredClone(this.trips);
     const tripIndex = trips.findIndex(el => el.id === tripId);
     let newRating = (trips[tripIndex].ratingsCount * trips[tripIndex].rating + rate) / (trips[tripIndex].ratingsCount + 1)
@@ -61,7 +61,7 @@ export class TripsService {
     return newRating;
   }
 
-  reserveTrip(tripId: number) {
+  reserveTrip(tripId: string) {
     let trips = structuredClone(this.trips);
     const trip = trips.find(el => el.id === tripId);
     if (!trip) { console.log("Error reserving trip"); return };
@@ -72,7 +72,7 @@ export class TripsService {
     }
   }
 
-  cancelTrip(tripId: number) {
+  cancelTrip(tripId: string) {
     let trips = structuredClone(this.trips);
     const trip = trips.find(el => el.id === tripId);
     if (!trip) { console.log("Error cancelling trip"); return };
@@ -83,7 +83,7 @@ export class TripsService {
     }
   }
 
-  isAvailable(tripId: number) {
+  isAvailable(tripId: string) {
     const trip = this.trips.find(el => el.id === tripId);
     if (trip) return trip.available > 0;
     else return false;

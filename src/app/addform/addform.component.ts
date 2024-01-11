@@ -74,7 +74,7 @@ export class AddformComponent {
   addTrip() {
     if (this.validateAll()) {
       const newTrip: Trip = {
-        id: Math.max(...this.tripsService.trips.map(el => el.id)) + 1,
+        id: self.crypto.randomUUID(),
         name: this.name,
         country: this.country,
         start: new Date(this.start).toLocaleDateString("pl"),

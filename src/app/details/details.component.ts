@@ -7,12 +7,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './details.component.css'
 })
 export class DetailsComponent {
-  tripId: number = -1;
+  // tripId: string = -1;
 
   constructor (private route: ActivatedRoute) {
-    this.route.params.subscribe(params => {
-      if (params) this.tripId = params["id"];
-    })
+    // this.route.params.subscribe(params => {
+    //   if (params) this.tripId = params["id"];
+    // })
   }
 
   

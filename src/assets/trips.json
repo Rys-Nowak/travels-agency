@@ -1,6 +1,6 @@
 [
   {
-    "id": 0,
+    "id": "0",
     "name": "Greece cruise",
     "country": "Greece",
     "start": "1.05.2024",
@@ -13,7 +13,7 @@
     "ratingsCount": 1
   },
   {
-    "id": 1,
+    "id": "1",
     "name": "Week in Crotia",
     "country": "Crotia",
     "start": "02.05.2024",
@@ -26,7 +26,7 @@
     "ratingsCount": 1
   },
   {
-    "id": 2,
+    "id": "2",
     "name": "See Budapest!",
     "country": "Hungary",
     "start": "06.05.2024",
@@ -39,7 +39,7 @@
     "ratingsCount": 0
   },
   {
-    "id": 3,
+    "id": "3",
     "name": "Warsaw",
     "country": "Poland",
     "start": "01.05.2024",
@@ -52,7 +52,7 @@
     "ratingsCount": 0
   },
   {
-    "id": 4,
+    "id": "4",
     "name": "Greece cruise",
     "country": "Greece",
     "start": "01.05.2024",
@@ -65,7 +65,7 @@
     "ratingsCount": 0
   },
   {
-    "id": 5,
+    "id": "5",
     "name": "Week in Crotia",
     "country": "Crotia",
     "start": "02.05.2024",
@@ -78,7 +78,7 @@
     "ratingsCount": 0
   },
   {
-    "id": 6,
+    "id": "6",
     "name": "Greece cruise",
     "country": "Greece",
     "start": "01.05.2024",
@@ -91,7 +91,7 @@
     "ratingsCount": 0
   },
   {
-    "id": 7,
+    "id": "7",
     "name": "Week in Crotia",
     "country": "Crotia",
     "start": "02.05.2024",
@@ -104,7 +104,7 @@
     "ratingsCount": 0
   },
   {
-    "id": 8,
+    "id": "8",
     "name": "Greece cruise",
     "country": "Greece",
     "start": "01.05.2024",
@@ -117,7 +117,7 @@
     "ratingsCount": 0
   },
   {
-    "id": 9,
+    "id": "9",
     "name": "Week in Crotia",
     "country": "Crotia",
     "start": "02.05.2024",

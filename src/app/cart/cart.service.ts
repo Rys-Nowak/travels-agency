@@ -62,7 +62,7 @@ export class CartService {
     }
   }
 
-  isInCart(tripId: number) {
+  isInCart(tripId: string) {
     return this.reservedTrips.map(el => el.id).includes(tripId);
   }
 }
