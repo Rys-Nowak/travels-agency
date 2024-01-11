@@ -1,7 +1,6 @@
 <app-filter></app-filter>
-
 <div class="trips-container">
-    <app-pagination [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+    <app-pagination [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" (pageChange)="onPageChange($event)"></app-pagination>
 
     <div class="trip"
         *ngFor="let trip of (trips | filter : countriesFilter : costMinFilter : costMaxFilter : startFilter : endFilter : ratingFromFilter : ratingToFilter)"

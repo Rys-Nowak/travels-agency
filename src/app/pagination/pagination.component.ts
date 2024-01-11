@@ -8,7 +8,7 @@ import { TripsService } from '../trips/trips.service';
 })
 export class PaginationComponent {
   @Input() currentPage: number = 1;
-  itemsPerPage: number = 5;
+  @Input() itemsPerPage: number = 5;
   totalItems: number = this.tripsService.trips.length;
   @Output() pageChange = new EventEmitter<number>();
   totalPages: number = this.calculateTotalPages(this.totalItems);

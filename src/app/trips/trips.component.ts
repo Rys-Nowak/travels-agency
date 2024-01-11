@@ -18,17 +18,15 @@ export class TripsComponent implements OnInit {
   endFilter: string = this.filterService.getLatestEnd();
   ratingFromFilter: number = this.filterService.getMinRating();
   ratingToFilter: number = this.filterService.getMaxRating();
-  trips: Trip[] = this.tripsService.trips;
   currentPage = 1;
-  itemsPerPage = 4;
-  totalItems = this.tripsService.trips.length;
+  itemsPerPage = 5;
+  trips: Trip[] = this.tripsService.trips.slice((this.currentPage - 1) * this.itemsPerPage, this.itemsPerPage);
 
   constructor(public tripsService: TripsService, public currencyService: CurrencyService, public filterService: FilterService, public cartService: CartService) {
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
-    console.log(this.tripsService.trips);
     this.trips = this.tripsService.trips.slice((page - 1) * this.itemsPerPage, page * this.itemsPerPage);
   }
 
