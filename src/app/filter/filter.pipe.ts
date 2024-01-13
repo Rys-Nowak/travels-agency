@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Trip } from '../trip';
+import { RatingService } from '../rating/rating.service';
 
 function parseDate(dateString: string) {
   const dateArr = dateString.split('.');

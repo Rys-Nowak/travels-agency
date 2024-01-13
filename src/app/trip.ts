@@ -10,6 +10,4 @@ export interface Trip {
     img: string;
     available: number;
     rating: number;
-    ratingsCount: number;
-    rate: number;
 }

@@ -40,7 +40,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     FormsModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
-  providers: [],
+  providers: [FilterPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

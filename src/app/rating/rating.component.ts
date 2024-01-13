@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Trip } from '../trip';
 import { TripsService } from '../trips/trips.service';
+import { RatingService } from './rating.service';
 
 @Component({
   selector: 'app-rating',
@@ -9,16 +10,20 @@ import { TripsService } from '../trips/trips.service';
 })
 export class RatingComponent {
   @Input('trip') trip: Trip | null = null;
+  rate: number = 0;
 
-  constructor(private tripsService: TripsService) {
+  constructor(private ratingService: RatingService) {
+  }
+
+  ngOnChanges(): void {
+    if (this.trip) {
+      this.ratingService.getMyRate(this.trip.id).then(rate => this.rate = rate);
+    }
   }
 
   setRating(rate: number) {
     if (this.trip) {
-      if (this.trip.rate) {
-        this.tripsService.removeRate(this.trip.id, this.trip.rate);
-      }
-      this.tripsService.addRate(this.trip.id, rate);
+      this.ratingService.setRate(this.trip.id, rate);
     }
   }
 

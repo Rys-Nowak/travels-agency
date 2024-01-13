@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CurrencyService } from '../currency.service';
+import { CurrencyService } from '../shared/services/currency.service';
 
 @Component({
   selector: 'app-navbar',

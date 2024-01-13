@@ -16,8 +16,8 @@ function parseDate(dateString: string) {
 export class AddformComponent {
   name: string = "";
   country: string = "";
-  start: string = new Date().toLocaleDateString("pl");
-  end: string = new Date().toLocaleDateString("pl");
+  start: string = "";
+  end: string = "";
   cost: number = 0;
   capacity: number = 0;
   description: string = "";
@@ -39,7 +39,7 @@ export class AddformComponent {
   }
 
   validateDescription() {
-    return /^[A-Za-z0-9,.-_'" ]*$/.test(this.description);
+    return /^[A-Za-z0-9,.-_'"\?\! ]*$/.test(this.description);
   }
 
   validateUrl() {
@@ -60,11 +60,11 @@ export class AddformComponent {
   }
 
   validateCost() {
-    return typeof this.cost === "number" && this.cost >= 0;
+    return Number.isFinite(this.cost) && this.cost >= 0;
   }
 
   validateCapacity() {
-    return typeof this.capacity === "number" && this.capacity >= 0 && !(this.capacity % 1);
+    return Number.isInteger(this.capacity) && this.capacity >= 0;
   }
 
   validateAll() {
@@ -74,19 +74,17 @@ export class AddformComponent {
   addTrip() {
     if (this.validateAll()) {
       const newTrip: Trip = {
-        id: self.crypto.randomUUID(),
+        id: self.crypto.randomUUID().toString(),
         name: this.name,
         country: this.country,
-        start: new Date(this.start).toLocaleDateString("pl"),
-        end: new Date(this.end).toLocaleDateString("pl"),
+        start: this.start,
+        end: this.end,
         cost: this.cost,
         capacity: this.capacity,
         description: this.description,
         img: this.img,
         available: this.capacity,
-        rating: 0,
-        ratingsCount: 0,
-        rate: 0
+        rating: 0
       };
       this.tripsService.addTrip(newTrip);
       this.router.navigate(['trips']);

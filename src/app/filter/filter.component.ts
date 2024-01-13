@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FilterService } from './filter.service';
 import { TripsService } from '../trips/trips.service';
-import { CurrencyService } from '../currency.service';
+import { CurrencyService } from '../shared/services/currency.service';
 
 @Component({
   selector: 'app-filter',

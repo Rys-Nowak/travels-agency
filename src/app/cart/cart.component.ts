@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CartService } from './cart.service';
 import { Trip } from '../trip';
 import { TripsService } from '../trips/trips.service';
-import { CurrencyService } from '../currency.service';
+import { CurrencyService } from '../shared/services/currency.service';
 
 @Component({
   selector: 'app-cart',

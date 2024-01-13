@@ -55,7 +55,6 @@ export class CartService {
     this.unCheckTrip(trip);
     let reservedTrips = structuredClone(this.reservedTrips);
     const index = this.reservedTrips.findIndex(el => el.id === trip.id);
-    console.log(index)
     if (index > -1) {
       reservedTrips.splice(index, 1);
       this.reservedTripsSubject.next(reservedTrips);

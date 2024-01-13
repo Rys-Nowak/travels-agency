@@ -17,7 +17,7 @@
     <p>
         <span>End Date</span>
         <input type="date" [(ngModel)]="end" (ngModelChange)="convertEnd($event)" name="end">
-        <span class="err-message" *ngIf="!validateEndDate()">End date has to be after start date</span>
+        <span class="err-message" *ngIf="!validateEndDate() && end">End date has to be after start date</span>
     </p>
     <p>
         <span>Price [PLN]</span>

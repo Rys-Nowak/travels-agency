@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../trip';
-import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Subject, firstValueFrom, throwError } from 'rxjs';
 import { CartService } from '../cart/cart.service';
+import { ApiService } from '../shared/services/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,56 +12,31 @@ export class TripsService {
   tripsSubject: Subject<Trip[]> = new Subject();
   trips: Trip[] = [];
 
-  constructor(private httpClient: HttpClient, private cartService: CartService) {
+  constructor(private httpClient: HttpClient, private cartService: CartService, private apiService: ApiService) {
     this.tripsSubject.next([]);
     this.tripsSubject.subscribe((trips) => {
       this.trips = trips;
     });
-    this.httpClient.get<Trip[]>("assets/trips.json").subscribe((data) => {
-      this.tripsSubject.next([...this.trips, ...data.map((el) => {
-        el.available = el.capacity;
-        return el;
-      })]);
-    });
+    this.refresh();
+  }
+
+  refresh() {
+    firstValueFrom(this.apiService.readAllTrips()).then(
+      data => {
+        this.tripsSubject.next(data);
+      }
+    );
   }
 
   addTrip(trip: Trip) {
-    this.tripsSubject.next([trip, ...this.trips]);
+    firstValueFrom(this.apiService.createTrip(trip)).then(() => this.refresh());
   }
 
   removeTrip(trip: Trip) {
-    let trips = structuredClone(this.trips);
-    trips.splice(this.trips.indexOf(trip), 1);
-    this.tripsSubject.next(trips);
+    firstValueFrom(this.apiService.deleteTrip(trip.id)).then(() => this.refresh());
   }
 
-  removeRate(tripId: string, rate: number): number {
-    let trips = structuredClone(this.trips);
-    const tripIndex = trips.findIndex(el => el.id === tripId);
-    let newRating;
-    if (trips[tripIndex].ratingsCount > 1) {
-      newRating = (trips[tripIndex].rating * trips[tripIndex].ratingsCount - rate) / (trips[tripIndex].ratingsCount - 1)
-    } else {
-      newRating = 0;
-    }
-    trips[tripIndex].rating = newRating;
-    trips[tripIndex].ratingsCount--;
-    trips[tripIndex].rate = 0;
-    this.tripsSubject.next(trips);
-    return newRating;
-  }
-
-  addRate(tripId: string, rate: number): number {
-    let trips = structuredClone(this.trips);
-    const tripIndex = trips.findIndex(el => el.id === tripId);
-    let newRating = (trips[tripIndex].ratingsCount * trips[tripIndex].rating + rate) / (trips[tripIndex].ratingsCount + 1)
-    trips[tripIndex].rating = newRating;
-    trips[tripIndex].ratingsCount++;
-    trips[tripIndex].rate = rate;
-    this.tripsSubject.next(trips);
-    return newRating;
-  }
-
+  // TODO!
   reserveTrip(tripId: string) {
     let trips = structuredClone(this.trips);
     const trip = trips.find(el => el.id === tripId);

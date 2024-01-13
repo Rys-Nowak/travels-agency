@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TripsService } from '../trips/trips.service';
 
 @Component({
   selector: 'app-pagination',
@@ -9,16 +8,9 @@ import { TripsService } from '../trips/trips.service';
 export class PaginationComponent {
   @Input() currentPage: number = 1;
   @Input() itemsPerPage: number = 5;
-  totalItems: number = this.tripsService.trips.length;
+  @Input() totalPages: number = 1;
+  @Input() totalItems: number = 0;
   @Output() pageChange = new EventEmitter<number>();
-  totalPages: number = this.calculateTotalPages(this.totalItems);
-
-  constructor(private tripsService: TripsService) {
-    this.tripsService.tripsSubject.subscribe((trips) => {
-      this.totalItems = trips.length;
-      this.totalPages = this.calculateTotalPages(trips.length);
-    })
-  }
 
   ngOnChanges(): void {
     this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
@@ -37,9 +29,5 @@ export class PaginationComponent {
 
   nextPage(): void {
     this.setPage(this.currentPage + 1);
-  }
-
-  calculateTotalPages(items: number) {
-    return Math.ceil(items / this.itemsPerPage);
   }
 }
