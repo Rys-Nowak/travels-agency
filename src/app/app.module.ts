@@ -15,7 +15,6 @@ import { FilterComponent } from './filter/filter.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FilterPipe } from './filter/filter.pipe';
 import { InfoComponent } from './info/info.component';
-import { DetailsComponent } from './details/details.component';
 import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
@@ -30,7 +29,6 @@ import { PaginationComponent } from './pagination/pagination.component';
     FilterComponent,
     FilterPipe,
     InfoComponent,
-    DetailsComponent,
     PaginationComponent,
   ],
   imports: [

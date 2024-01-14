@@ -22,8 +22,7 @@ export class RatingService {
       sum += val;
     }
     const newRating = sum / reviews.length;
-    await firstValueFrom(this.apiService.updateTrip(tripId, {rating: newRating}));
-    this.tripsService.refresh();
+    this.tripsService.updateTrip(tripId, {rating: newRating});
     return newRating;
   }
 

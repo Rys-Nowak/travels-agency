@@ -1,30 +1,7 @@
 import { db } from "../config.js";
-import { updateTrip } from "./trip.controller.js";
+import { validateFullReview, validateId } from "../helpers/validation.js";
 
-const reviewsCollection = db.collection("reviews")
-
-function isUsername(name) {
-    return /^[a-zA-Z0-9_\.-]+$/.test(name);
-}
-
-function isRate(rate) {
-    return Number.isInteger(rate) && rate >= 1 && rate <= 5;
-}
-
-function isId(id) {
-    return true;
-    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
-}
-
-function validateId(id) {
-    if (isId(id)) return true;
-    throw new Error("Invalid id");
-}
-
-function validateFullReview(review) {
-    if (isId(review.id) && isRate(review.rate) && isUsername(review.username)) return true;
-    throw new Error("Invalid data");
-}
+const reviewsCollection = db.collection("reviews");
 
 export function postReview(req, res) {
     const review = req.body;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../trip';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Subject, firstValueFrom, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Subject, firstValueFrom } from 'rxjs';
 import { CartService } from '../cart/cart.service';
 import { ApiService } from '../shared/services/api.service';
 
@@ -36,26 +36,27 @@ export class TripsService {
     firstValueFrom(this.apiService.deleteTrip(trip.id)).then(() => this.refresh());
   }
 
-  // TODO!
+  updateTrip(tripId: string, obj: Object) {
+    firstValueFrom(this.apiService.updateTrip(tripId, obj)).then(() => this.refresh());
+  }
+
   reserveTrip(tripId: string) {
-    let trips = structuredClone(this.trips);
-    const trip = trips.find(el => el.id === tripId);
-    if (!trip) { console.log("Error reserving trip"); return };
+    const trip = this.trips.find(el => el.id === tripId);
+    if (!trip) { console.log("Error reserving trip"); return; };
     if (trip.available > 0) {
-      --trip.available;
-      this.cartService.addToCart(trip);
-      this.tripsSubject.next(trips);
+      firstValueFrom(this.cartService.addToCart(trip)).then(() => {
+        this.updateTrip(tripId, { available: trip.available - 1 });
+      });
     }
   }
 
   cancelTrip(tripId: string) {
-    let trips = structuredClone(this.trips);
-    const trip = trips.find(el => el.id === tripId);
+    const trip = this.trips.find(el => el.id === tripId);
     if (!trip) { console.log("Error cancelling trip"); return };
     if (trip.capacity > trip.available) {
-      ++trip.available;
-      this.cartService.removeFromCart(trip);
-      this.tripsSubject.next(trips);
+      firstValueFrom(this.cartService.removeFromCart(trip)).then(() => {
+        this.updateTrip(tripId, { available: trip.available + 1 });
+      });
     }
   }
 

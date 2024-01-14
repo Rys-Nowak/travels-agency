@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../trip';
-import { Subject } from 'rxjs';
+import { Subject, firstValueFrom } from 'rxjs';
+import { ApiService } from '../shared/services/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,32 +10,31 @@ export class CartService {
   reservedTrips: Trip[] = [];
   reservedTripsSubject: Subject<Trip[]> = new Subject();
   checkedTrips: Trip[] = this.reservedTrips;
-  checkedTripsSubject: Subject<Trip[]> = new Subject();
 
-  constructor() {
-    this.reservedTripsSubject.next([]);
+  constructor(private apiService: ApiService) {
+    firstValueFrom(this.apiService.readCart()).then((data) => {
+      this.reservedTripsSubject.next(data);
+    })
     this.reservedTripsSubject.subscribe((trips) => {
       this.reservedTrips = trips;
     });
     this.checkAll();
-    this.checkedTripsSubject.subscribe((trips) => {
-      this.checkedTrips = trips;
-    });
   }
 
   buyTrips() {
-    for (const trip of this.checkedTrips) {
-      this.removeFromCart(trip)
-    }
-    this.checkAll();
+    Promise.all(this.checkedTrips.map((trip) => {
+      return firstValueFrom(this.removeFromCart(trip));
+    })).then(() => {
+      this.checkAll();
+    })
   }
 
   checkTrip(trip: Trip) {
-    this.checkedTripsSubject.next([trip, ...this.checkedTrips]);
+    this.checkedTrips = [trip, ...this.checkedTrips];
   }
 
   checkAll() {
-    this.checkedTripsSubject.next(this.reservedTrips);
+    this.checkedTrips = this.reservedTrips;
   }
 
   unCheckTrip(trip: Trip) {
@@ -42,13 +42,14 @@ export class CartService {
     const index = this.checkedTrips.findIndex(el => el.id === trip.id);
     if (index > -1) {
       checkedTrips.splice(index, 1);
-      this.checkedTripsSubject.next(checkedTrips);
+      this.checkedTrips = checkedTrips;
     }
   }
 
   addToCart(trip: Trip) {
     this.checkTrip(trip);
     this.reservedTripsSubject.next([trip, ...this.reservedTrips]);
+    return this.apiService.addToCart(trip.id);
   }
 
   removeFromCart(trip: Trip) {
@@ -59,6 +60,7 @@ export class CartService {
       reservedTrips.splice(index, 1);
       this.reservedTripsSubject.next(reservedTrips);
     }
+    return this.apiService.removeFromCart(trip.id);
   }
 
   isInCart(tripId: string) {

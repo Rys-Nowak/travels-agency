@@ -3,6 +3,7 @@ import cors from "cors";
 import usersRouter from "./routes/users.js";
 import tripsRouter from "./routes/trips.js";
 import reviewsRouter from "./routes/reviews.js";
+import cartRouter from "./routes/cart.js";
 // import { decodeIdToken } from "./middlewares/tokenAuth.js";
 
 const PORT = process.env.PORT || 8080;
@@ -22,5 +23,6 @@ app.use(urlencoded({ extended: false }));
 app.use("/api/users", usersRouter);
 app.use("/api/trips", tripsRouter);
 app.use("/api/reviews", reviewsRouter);
+app.use("/api/cart", cartRouter);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -25,8 +25,6 @@ export class ApiService {
   }
 
   createTrip(trip: Trip) {
-    console.log("...")
-    console.log(trip)
     return this.http.post<Trip>(this.url + "trips/", trip).pipe(
       catchError(this.handleError)
     );
@@ -44,36 +42,54 @@ export class ApiService {
     // )
     return this.http.get<Trip[]>(this.url + "trips/").pipe(
       catchError(this.handleError)
-    );;
+    );
   }
 
   updateTrip(id: string, body: Object) {
     return this.http.put<Trip>(this.url + "trips/" + id, body).pipe(
       catchError(this.handleError)
-    );;
+    );
   }
 
   deleteTrip(id: string) {
     return this.http.delete(this.url + "trips/" + id).pipe(
       catchError(this.handleError)
-    );;
+    );
   }
 
   addReview(review: Review) {
     return this.http.post<Review>(this.url + "reviews/", review).pipe(
       catchError(this.handleError)
-    );;
+    );
   }
 
   readAllReviews() {
     return this.http.get<Review[]>(this.url + "reviews/").pipe(
       catchError(this.handleError)
-    );;
+    );
   }
 
   readReviewsByTrip(tripId: string) {
     return this.http.get<Review[]>(this.url + "reviews/" + tripId).pipe(
       catchError(this.handleError)
-    );;
+    );
+  }
+
+  addToCart(tripId: string) {
+    return this.http.post<Trip>(this.url + "cart/", { tripId: tripId }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  removeFromCart(tripId: string) {
+    return this.http.delete(this.url + "cart/" + tripId).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  readCart() {
+    return this.http.get<Trip[]>(this.url + "cart/").pipe(
+      catchError(this.handleError)
+    );
   }
 }
