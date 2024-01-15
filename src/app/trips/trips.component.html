@@ -15,7 +15,7 @@
             <p>{{trip.description}}</p>
         </div>
         <div class="data">
-            <app-rating [trip]="trip"></app-rating>
+            <app-rating *ngIf="authService.currentUser.roles.includes('client')" [trip]="trip"></app-rating>
             <p class="cost">Cost: {{currencyService.convertCurrency(trip.cost)}}
                 {{currencyService.currency}}</p>
             <p>Start date: {{trip.start}}</p>
@@ -26,10 +26,10 @@
             <p *ngIf="!trip.available" style="color:red">Trip unavailable!</p>
         </div>
         <div class="buttons">
-            <input *ngIf="trip.available" class="add btn" type="button" value="+" (click)="reserveTrip(trip)">
-            <input *ngIf="trip.available !== trip.capacity && cartService.isInCart(trip.id)" class="del btn"
+            <input *ngIf="trip.available && authService.currentUser.roles.includes('client')" class="add btn" type="button" value="+" (click)="reserveTrip(trip)">
+            <input *ngIf="trip.available !== trip.capacity && cartService.isInCart(trip.id) && authService.currentUser.roles.includes('client')" class="del btn"
                 type="button" value="-" (click)="cancelTrip(trip)">
-            <button (click)="removeTrip(trip)" class="btn"><img src="../../assets/trash.svg"></button>
+            <button *ngIf="authService.currentUser.roles.includes('admin')" (click)="removeTrip(trip)" class="btn"><img src="../../assets/trash.svg"></button>
         </div>
     </div>
 </div>

@@ -1,5 +1,10 @@
-function isUsername(name) {
-    return /^[a-zA-Z0-9_\.-]+$/.test(name);
+function isUsername(username) {
+    return /^[0-9A-Za-z]{6,16}$/.test(username);
+}
+
+function isPassword(password) {
+    return /^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^0-9A-Za-z]).{8,32}$/
+        .test(password);
 }
 
 function isRate(rate) {
@@ -7,8 +12,7 @@ function isRate(rate) {
 }
 
 function isId(id) {
-    return true;
-    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id) || [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(el => el.toString()).includes(id);
 }
 
 function isName(name) {
@@ -82,18 +86,22 @@ export function validateId(id) {
     throw new Error("Invalid id");
 }
 
-export function validateUsername(id) {
+export function validateUsername(username) {
     if (isUsername(username)) return true;
     throw new Error("Invalid username");
 }
 
+export function validateUser(user) {
+    if (isUsername(user.username) && isPassword(user.password)) return true;
+    throw new Error("Invalid username");
+}
+
 export function validateFullReview(review) {
-    if (isId(review.id) && isRate(review.rate) && isUsername(review.username)) return true;
+    if (isId(review.tripId) && isRate(review.rate) && isUsername(review.username)) return true;
     throw new Error("Invalid review data");
 }
 
 export function validateCartElement(value) {
-    if (isId(value.id) && isUsername(value.username)) return true;
+    if (isId(value.tripId) && isUsername(value.username)) return true;
     throw new Error("Invalid cart data");
 }
-

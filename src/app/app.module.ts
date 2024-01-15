@@ -16,6 +16,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FilterPipe } from './filter/filter.pipe';
 import { InfoComponent } from './info/info.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     FilterPipe,
     InfoComponent,
     PaginationComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

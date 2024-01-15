@@ -2,10 +2,19 @@
     <nav>
         <h2 class="nav-item" routerLink="/home">Home</h2>
         <h2 class="nav-item" routerLink="/trips">Trips</h2>
-        <h2 class="nav-item" routerLink="/add">Add New Trip</h2>
-        <h2 class="nav-item" routerLink="/cart">Cart</h2>
+        <h2 class="nav-item" *ngIf="authService.currentUser.roles.includes('admin')" routerLink="/add">Add New Trip</h2>
+        <h2 class="nav-item" *ngIf="authService.currentUser.roles.includes('client')" routerLink="/cart">Cart</h2>
+        <h2 class="nav-item" *ngIf="authService.currentUser.roles.includes('guest')" routerLink="/login">Log in</h2>
+        <h2 class="nav-item" *ngIf="authService.currentUser.roles.includes('guest')" routerLink="/register">Register</h2>
+        <h2 class="nav-item" *ngIf="!authService.currentUser.roles.includes('guest')" (click)="authService.logout()">Log out</h2>
     </nav>
     <div class="widget">
+        <!-- <div class="center">
+            <select [(ngModel)]="selectedMode" (ngModelChange)="changeMode($event)">
+                <option *ngFor="let mode of modes" [value]="mode">{{ mode }}</option>
+            </select>
+        </div> -->
+        <p class="user" *ngIf="authService.currentUser.username">Hi {{authService.currentUser.username}}!</p>
         <app-info></app-info>
         <p><a class="currency" (click)="currencyService.switchCurrency()">{{currencyService.currency}}</a></p>
     </div>

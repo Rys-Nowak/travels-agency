@@ -3,15 +3,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Trip } from '../../trip';
 import { Review } from '../../review';
 import { catchError, throwError } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   url: string = "http://localhost:8080/api/";
-  // private readonly getTripsAction$ = new Subject();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: AuthService) {
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -25,70 +25,61 @@ export class ApiService {
   }
 
   createTrip(trip: Trip) {
-    return this.http.post<Trip>(this.url + "trips/", trip).pipe(
+    return this.http.post<Trip>(this.url + "trips/", trip, { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
   readAllTrips() {
-    // return this.getTripsAction$.pipe(
-    //   startWith(''),
-    //   concatMap(() => {
-    //     return this.http.get<Trip[]>(this.url + "trips").pipe(
-    //       retry(1),
-    //       tap(() => this.getTripsAction$.next(true))
-    //     );
-    //   }),
-    // )
     return this.http.get<Trip[]>(this.url + "trips/").pipe(
       catchError(this.handleError)
     );
   }
 
   updateTrip(id: string, body: Object) {
-    return this.http.put<Trip>(this.url + "trips/" + id, body).pipe(
+    return this.http.put<Trip>(this.url + "trips/" + id, body, { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteTrip(id: string) {
-    return this.http.delete(this.url + "trips/" + id).pipe(
+    return this.http.delete(this.url + "trips/" + id, { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
   addReview(review: Review) {
-    return this.http.post<Review>(this.url + "reviews/", review).pipe(
+    return this.http.post<Review>(this.url + "reviews/", review, { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
   readAllReviews() {
-    return this.http.get<Review[]>(this.url + "reviews/").pipe(
+    return this.http.get<Review[]>(this.url + "reviews/", { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
   readReviewsByTrip(tripId: string) {
-    return this.http.get<Review[]>(this.url + "reviews/" + tripId).pipe(
+    return this.http.get<Review[]>(this.url + "reviews/" + tripId, { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
   addToCart(tripId: string) {
-    return this.http.post<Trip>(this.url + "cart/", { tripId: tripId }).pipe(
+    return this.http.post<Trip>(this.url + "cart/", { tripId: tripId }, { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
   removeFromCart(tripId: string) {
-    return this.http.delete(this.url + "cart/" + tripId).pipe(
+    return this.http.delete(this.url + "cart/" + tripId, { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
   readCart() {
-    return this.http.get<Trip[]>(this.url + "cart/").pipe(
+    return this.http.get<Trip[]>(this.url + "cart/", { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)
     );
   }

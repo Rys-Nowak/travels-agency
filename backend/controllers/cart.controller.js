@@ -1,11 +1,11 @@
 import { db } from "../config.js";
-import { validateCartElement } from "../helpers/validation.js";
+import { validateCartElement, validateId } from "../helpers/validation.js";
 
 const cartCollection = db.collection("cart");
 
 export function addToCart(req, res) {
     const cartElement = {
-        username: "test",
+        username: req.currentUser,
         tripId: req.body.tripId
     }
     try {
@@ -15,20 +15,17 @@ export function addToCart(req, res) {
         return;
     }
     cartCollection
-        .doc(`${cartElement.username}-${cartElement.tripId}`)
-        .set(cartElement)
+        .add(cartElement)
         .then(() => {
             res.status(201).send(cartElement);
         })
         .catch((err) => {
-            res
-                .status(500)
-                .send({ message: err.message });
+            res.status(500).send({ message: err.message });
         });
 }
 
 export function getUserCart(req, res) {
-    const username = "test";
+    const username = req.currentUser;
     cartCollection
         .where("username", "==", username)
         .get()
@@ -51,8 +48,8 @@ export function getUserCart(req, res) {
 }
 
 export function removeFromCart(req, res) {
-    const tripId = req.params.id;
-    const username = "test";
+    const tripId = req.params.tripId;
+    const username = req.currentUser;
     try {
         validateId(tripId);
     } catch (err) {
@@ -60,24 +57,15 @@ export function removeFromCart(req, res) {
         return;
     }
     cartCollection
-        .doc(`${username}-${tripId}`)
+        .where("username", "==", username)
+        .where("tripId", "==", tripId)
+        .limit(1)
         .get()
-        .then((docSnap) => {
-            if (!docSnap.exists) {
-                res.status(404).send({ message: "Trip not found" });
-            } else {
-                cartCollection
-                    .doc(`${username}-${tripId}`)
-                    .delete()
-                    .then(() => {
-                        res.sendStatus(204);
-                    })
-                    .catch((err) => {
-                        res.status(500).send({ message: err.message });
-                    });
-            }
+        .then((querySnap) => {
+            querySnap.forEach((doc) => doc.ref.delete())
+            res.sendStatus(204);
         })
         .catch((err) => {
             res.status(500).send({ message: err.message });
-        });
+        })
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Trip } from '../trip';
 import { Subject, firstValueFrom } from 'rxjs';
 import { ApiService } from '../shared/services/api.service';
+import { AuthService } from '../shared/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,11 @@ export class CartService {
   reservedTripsSubject: Subject<Trip[]> = new Subject();
   checkedTrips: Trip[] = this.reservedTrips;
 
-  constructor(private apiService: ApiService) {
-    firstValueFrom(this.apiService.readCart()).then((data) => {
-      this.reservedTripsSubject.next(data);
-    })
+  constructor(private apiService: ApiService, private authService: AuthService) {
+    authService.refreshToken().then(() => firstValueFrom(this.apiService.readCart()))
+      .then((data) => {
+        this.reservedTripsSubject.next(data);
+      });
     this.reservedTripsSubject.subscribe((trips) => {
       this.reservedTrips = trips;
     });

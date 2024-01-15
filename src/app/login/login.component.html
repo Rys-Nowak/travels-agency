@@ -1,0 +1,17 @@
+<form>
+    <h1>Login</h1>
+    <p>
+        <span>Username</span>
+        <input [(ngModel)]="username" name="username">
+    </p>
+    <p>
+        <span>Password</span>
+        <input [(ngModel)]="password" name="password" type="password">
+    </p>
+    <p>
+        <input (click)="login()" type="submit" class="submit btn" value="Sign in">
+    </p>
+    <p class="link">
+        Register <a routerLink="/register">here</a>
+    </p>
+</form>

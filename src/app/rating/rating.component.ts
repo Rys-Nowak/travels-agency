@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Trip } from '../trip';
-import { TripsService } from '../trips/trips.service';
 import { RatingService } from './rating.service';
 
 @Component({

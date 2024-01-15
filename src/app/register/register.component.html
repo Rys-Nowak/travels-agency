@@ -1,0 +1,19 @@
+<form>
+    <h1>Register</h1>
+    <p>
+        <span>Username</span>
+        <input [(ngModel)]="username" name="username">
+        <span class="err-message" *ngIf="!validateUsername() && username">Username has to contain only letters (upper and lowercase) and numbers. Length from 6 to 16</span>
+    </p>
+    <p>
+        <span>Password</span>
+        <input [(ngModel)]="password" name="password" type="password">
+        <span class="err-message" *ngIf="!validatePassword() && password">Password has to contain at least one number, one uppercase letter, one lowercase letter and one special character. Length from 8 to 32</span>
+    </p>
+    <p>
+        <input (click)="register()" type="submit" class="submit btn" value="Sign up">
+    </p>
+    <p class="link">
+        Go to <a routerLink="/login">login</a>
+    </p>
+</form>

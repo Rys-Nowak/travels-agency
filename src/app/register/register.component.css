@@ -1,0 +1,49 @@
+input {
+    border: 0;
+    border-bottom: 1px solid #634B66;
+    background-color: inherit;
+    margin-left: 30px;
+}
+
+input:focus {
+    outline: 0;
+    border-bottom: 1px solid #18020C;
+}
+
+.submit {
+    margin-left: 0;
+    margin-top: 20px;
+    border: inherit;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: larger;
+    background-color: #9590A8;
+}
+
+.submit:hover {
+    outline: solid 2px #634B66;
+}
+
+.btn {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+form {
+    padding-left: 80px;
+}
+
+.err-message {
+    color: red;
+    margin-left: 20px;
+    font-size: small;
+}
+
+h1 {
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.link {
+    margin-top: 50px;
+}

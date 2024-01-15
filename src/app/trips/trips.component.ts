@@ -5,6 +5,7 @@ import { CurrencyService } from '../shared/services/currency.service';
 import { FilterService } from '../filter/filter.service';
 import { CartService } from '../cart/cart.service';
 import { FilterPipe } from '../filter/filter.pipe';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-trips',
@@ -25,7 +26,7 @@ export class TripsComponent implements OnInit {
   tripsPage: Trip[] = this.tripsService.trips.slice((this.currentPage - 1) * this.itemsPerPage, this.itemsPerPage);
   totalPages = this.calculateTotalPages();
 
-  constructor(public tripsService: TripsService, public currencyService: CurrencyService, public filterService: FilterService, public cartService: CartService, private filterPipe: FilterPipe) {
+  constructor(public tripsService: TripsService, public currencyService: CurrencyService, public filterService: FilterService, public cartService: CartService, private filterPipe: FilterPipe, public authService: AuthService) {
   }
 
   onPageChange(page: number) {
