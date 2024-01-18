@@ -13,10 +13,15 @@ export class CartService {
   checkedTrips: Trip[] = this.reservedTrips;
 
   constructor(private apiService: ApiService, private authService: AuthService) {
-    authService.refreshToken().then(() => firstValueFrom(this.apiService.readCart()))
-      .then((data) => {
-        this.reservedTripsSubject.next(data);
-      });
+    this.authService.isNotLoggedIn.subscribe((val) => {
+      if (val === false) {
+        console.log("cart updating");
+        firstValueFrom(this.apiService.readCart())
+          .then((data) => {
+            this.reservedTripsSubject.next(data);
+          })
+      }
+    })
     this.reservedTripsSubject.subscribe((trips) => {
       this.reservedTrips = trips;
     });

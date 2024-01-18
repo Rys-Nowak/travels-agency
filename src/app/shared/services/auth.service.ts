@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, firstValueFrom, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, firstValueFrom, throwError } from 'rxjs';
 import { UserCredentials } from '../../UserCredentials';
 import { Tokens } from '../../Tokens';
 import { Router } from '@angular/router';
@@ -15,20 +15,28 @@ export class AuthService {
   token: string;
   refresh: string;
   currentUser: UserDto;
+  isNotLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(true)
+  interval: ReturnType<typeof setInterval> | null = null
 
   constructor(private http: HttpClient, private router: Router) {
+    this.isNotLoggedIn.subscribe((value) => {
+      if (value === false) {
+        this.setRefreshing();
+      }
+    })
     this.token = "";
     this.refresh = "";
     this.currentUser = {
       username: "",
       roles: ["guest"]
     }
-    if (this.getTokensfromSession()) {
-      this.refreshToken().then(() => this.setCurrentUser());
-      setInterval(() => {
-        if (this.currentUser.username) this.refreshToken();
-      }, 8 * 1000);
-    }
+    this.getTokensfromSession();
+  }
+
+  private setRefreshing() {
+    this.interval = setInterval(() => {
+      if (this.currentUser.username) this.refreshToken();
+    }, 8 * 1000);
   }
 
   async refreshToken() {
@@ -48,7 +56,9 @@ export class AuthService {
       this.refresh = sessionStorage.getItem("refresh") ?? "";
       this.currentUser.username = sessionStorage.getItem("username") ?? "";
     }
-    return this.token && this.refresh;
+    if (this.token && this.refresh && this.currentUser.username) {
+      this.refreshToken().then(() => this.setCurrentUser()).then(() => this.isNotLoggedIn.next(false));
+    }
   }
 
   getHeaders() {
@@ -77,6 +87,8 @@ export class AuthService {
   }
 
   logout() {
+    this.isNotLoggedIn.next(true);
+    if (this.interval) { clearInterval(this.interval); }
     this.token = "";
     this.refresh = "";
     this.currentUser = {
@@ -118,8 +130,7 @@ export class AuthService {
       }
       this.token = res.token.split(" ")[1];
       this.refresh = res.refresh;
-      this.setCurrentUser();
-      this.router.navigate(['home']);
+      this.setCurrentUser().then(() => this.isNotLoggedIn.next(false)).then(() => this.router.navigate(['home']));
     });
   }
 }

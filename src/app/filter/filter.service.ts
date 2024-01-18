@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Trip } from '../trip';
 import { TripsService } from '../trips/trips.service';
 import { Subject } from 'rxjs';
-import { RatingService } from '../rating/rating.service';
 
 function parseDate(dateString: string) {
   const dateArr = dateString.split('.');
@@ -27,7 +26,7 @@ export class FilterService {
   selectedCountries: Subject<string[]> = new Subject();
   trips: Trip[] = this.tripsService.trips;
 
-  constructor(private tripsService: TripsService, private ratingService: RatingService) {
+  constructor(private tripsService: TripsService) {
     this.tripsService.tripsSubject.subscribe((trips) => {
       this.trips = trips;
       this.setBounds(trips);
