@@ -58,7 +58,7 @@ function createUser(user, res) {
 function setRole(user, res) {
     return () => {
         const role = "client";
-        rolesCollection.doc(user.username + role)
+        rolesCollection.doc(user.username + "-" + role)
             .set({
                 username: user.username,
                 role: role
@@ -126,7 +126,7 @@ function sendTokens(user, res) {
         const token = jwt.sign({
             username: user.username,
             roles: roles
-        }, jwtSecret, { expiresIn: 10 }); // 1 min
+        }, jwtSecret, { expiresIn: 10 }); // 10 s
         const refresh = crypto.randomUUID().toString();
         refreshCollection.doc(refresh).set({ username: user.username })
             .then(() => {
@@ -163,7 +163,7 @@ export function refreshAccessToken(req, res) {
                     const token = jwt.sign({
                         username: username,
                         roles: roles
-                    }, jwtSecret, { expiresIn: 10 }); // 1 min
+                    }, jwtSecret, { expiresIn: 10 }); // 10 s
                     res.send({ token: "JWT: " + token });
                 });
         })

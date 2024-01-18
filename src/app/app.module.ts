@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { AngularFireModule } from "@angular/fire/compat";
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AppComponent } from './app.component';
 import { TripsComponent } from './trips/trips.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,7 +14,6 @@ import { AddformComponent } from './addform/addform.component';
 import { FormsModule } from '@angular/forms';
 import { RatingComponent } from './rating/rating.component';
 import { FilterComponent } from './filter/filter.component';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FilterPipe } from './filter/filter.pipe';
 import { InfoComponent } from './info/info.component';
 import { PaginationComponent } from './pagination/pagination.component';
@@ -40,7 +41,8 @@ import { RegisterComponent } from './register/register.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgMultiSelectDropDownModule.forRoot()
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [FilterPipe],
   bootstrap: [AppComponent]

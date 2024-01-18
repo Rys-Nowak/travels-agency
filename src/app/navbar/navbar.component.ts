@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CurrencyService } from '../shared/services/currency.service';
 import { AuthService } from '../shared/services/auth.service';
+import { DbService } from '../shared/services/db.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,11 +13,17 @@ export class NavbarComponent {
   ];
   selectedMode: string = this.authService.persistance;
 
-  constructor(public currencyService: CurrencyService, public authService: AuthService) {
-    
+  constructor(public authService: AuthService, public dbService: DbService) {
+    authService.persistanceSubject.subscribe((value) => {
+      this.selectedMode = value;
+    })
   }
 
   changeMode(mode: string) {
-    this.authService.persistance = mode;
+    this.authService.setPersistanceMode(mode);
+  }
+
+  switchDatabase() {
+    this.dbService.switchMode()
   }
 }

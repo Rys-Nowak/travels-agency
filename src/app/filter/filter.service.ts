@@ -15,7 +15,7 @@ export class FilterService {
   private countries: string[] = [];
   private costMin: number = 0;
   private costMax: number = Number.MAX_VALUE;
-  private earliestStart: string = new Date().toLocaleDateString("pl");
+  private earliestStart: string = new Date(Date.now() - 60000 * 60 * 24 * 365).toLocaleDateString("pl");
   private latestEnd: string = new Date(Date.now() + 60000 * 60 * 24 * 365).toLocaleDateString("pl"); // + 1 year
   selectedRatingFrom: Subject<number> = new Subject();
   selectedRatingTo: Subject<number> = new Subject();

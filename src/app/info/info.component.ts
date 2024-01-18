@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CartService } from '../cart/cart.service';
 import { CurrencyService } from '../shared/services/currency.service';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-info',
@@ -11,7 +12,7 @@ export class InfoComponent {
   nReserved: number = 0;
   totalValue: number = 0;
 
-  constructor(private cartService: CartService, public currencyService: CurrencyService) {
+  constructor(private cartService: CartService, public currencyService: CurrencyService, public authService: AuthService) {
     this.cartService.reservedTripsSubject.subscribe((value) => {
       this.nReserved = value.length;
       this.totalValue = 0;

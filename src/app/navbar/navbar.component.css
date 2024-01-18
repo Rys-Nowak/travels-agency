@@ -18,6 +18,7 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-right: 10px;
 }
 
 .main-container {
@@ -26,9 +27,22 @@ nav {
     width: 100%;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
     .main-container {
         flex-direction: column;
+    }
+    nav {
+        padding-right: 30px;
+        padding-left: 30px;
+        justify-content: space-evenly;
+    }
+    .widget {
+        padding-right: 0;
+        padding-left: 0;
+        justify-content: space-between;
+    }
+    .user {
+        margin-left: 0;
     }
 }
 
@@ -38,7 +52,6 @@ nav {
     padding-right: 50px;
     padding-left: 30px;
     display: flex;
-
 }
 
 a {

@@ -54,12 +54,6 @@ export class ApiService {
     );
   }
 
-  readAllReviews() {
-    return this.http.get<Review[]>(this.url + "reviews/", { headers: this.authService.getHeaders() }).pipe(
-      catchError(this.handleError)
-    );
-  }
-
   readReviewsByTrip(tripId: string) {
     return this.http.get<Review[]>(this.url + "reviews/" + tripId, { headers: this.authService.getHeaders() }).pipe(
       catchError(this.handleError)

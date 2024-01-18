@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../trip';
 import { Subject, firstValueFrom } from 'rxjs';
-import { ApiService } from '../shared/services/api.service';
 import { AuthService } from '../shared/services/auth.service';
+import { DbService } from '../shared/services/db.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,37 +11,42 @@ export class CartService {
   reservedTrips: Trip[] = [];
   reservedTripsSubject: Subject<Trip[]> = new Subject();
   checkedTrips: Trip[] = this.reservedTrips;
+  checkedTripsSubject: Subject<Trip[]> = new Subject();
 
-  constructor(private apiService: ApiService, private authService: AuthService) {
+  constructor(private dbService: DbService, private authService: AuthService) {
     this.authService.isNotLoggedIn.subscribe((val) => {
-      if (val === false) {
-        console.log("cart updating");
-        firstValueFrom(this.apiService.readCart())
-          .then((data) => {
-            this.reservedTripsSubject.next(data);
-          })
-      }
+      if (val === false) this.refresh();
     })
+    this.checkedTripsSubject.subscribe((trips) => {
+      this.checkedTrips = trips;
+    });
     this.reservedTripsSubject.subscribe((trips) => {
       this.reservedTrips = trips;
+      this.checkAll();
     });
-    this.checkAll();
+  }
+
+  refresh() {
+    if (this.authService.currentUser.roles.includes("client")) {
+      firstValueFrom(this.dbService.readCart())
+        .then(data => this.reservedTripsSubject.next(data));
+    }
   }
 
   buyTrips() {
     Promise.all(this.checkedTrips.map((trip) => {
-      return firstValueFrom(this.removeFromCart(trip));
+      return this.removeFromCart(trip);
     })).then(() => {
       this.checkAll();
     })
   }
 
   checkTrip(trip: Trip) {
-    this.checkedTrips = [trip, ...this.checkedTrips];
+    this.checkedTripsSubject.next([trip, ...this.checkedTrips]);
   }
 
   checkAll() {
-    this.checkedTrips = this.reservedTrips;
+    this.checkedTripsSubject.next(this.reservedTrips);
   }
 
   unCheckTrip(trip: Trip) {
@@ -49,25 +54,20 @@ export class CartService {
     const index = this.checkedTrips.findIndex(el => el.id === trip.id);
     if (index > -1) {
       checkedTrips.splice(index, 1);
-      this.checkedTrips = checkedTrips;
+      this.checkedTripsSubject.next(checkedTrips);
     }
   }
 
-  addToCart(trip: Trip) {
+  async addToCart(trip: Trip) {
     this.checkTrip(trip);
-    this.reservedTripsSubject.next([trip, ...this.reservedTrips]);
-    return this.apiService.addToCart(trip.id);
+    await firstValueFrom(this.dbService.addToCart(trip.id));
+    return this.refresh();
   }
 
-  removeFromCart(trip: Trip) {
+  async removeFromCart(trip: Trip) {
     this.unCheckTrip(trip);
-    let reservedTrips = structuredClone(this.reservedTrips);
-    const index = this.reservedTrips.findIndex(el => el.id === trip.id);
-    if (index > -1) {
-      reservedTrips.splice(index, 1);
-      this.reservedTripsSubject.next(reservedTrips);
-    }
-    return this.apiService.removeFromCart(trip.id);
+    await firstValueFrom(this.dbService.removeFromCart(trip.id));
+    return this.refresh();
   }
 
   isInCart(tripId: string) {

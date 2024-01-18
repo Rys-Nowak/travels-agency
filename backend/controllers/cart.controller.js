@@ -62,8 +62,12 @@ export function removeFromCart(req, res) {
         .limit(1)
         .get()
         .then((querySnap) => {
-            querySnap.forEach((doc) => doc.ref.delete())
-            res.sendStatus(204);
+            Promise.all(querySnap.docs.map((doc) => doc.ref.delete()))
+                .then(() => {
+                    res.sendStatus(204);
+                }).catch((err) => {
+                    res.status(500).send({ message: err.message });
+                });
         })
         .catch((err) => {
             res.status(500).send({ message: err.message });

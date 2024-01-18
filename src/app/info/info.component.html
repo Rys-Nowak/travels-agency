@@ -1,5 +1,11 @@
-<p *ngIf="nReserved">You have <b>{{nReserved}} </b>
-    <span *ngIf="nReserved == 1">trip</span>
-    <span *ngIf="nReserved != 1">trips</span>
-    with total value of <b>{{currencyService.convertCurrency(totalValue)}}</b>
+<p><span *ngIf="nReserved && authService.currentUser.roles.includes('client')">
+        You reserved <b [ngClass]="{
+            'high': nReserved > 10,
+            'low': nReserved < 10
+          }">{{nReserved}} </b>
+        <span *ngIf="nReserved == 1">trip</span>
+        <span *ngIf="nReserved != 1">trips</span>
+        worth <b>{{currencyService.convertCurrency(totalValue)}}</b>
+    </span>
+    <a class="currency" (click)="currencyService.switchCurrency()">{{currencyService.currency}}</a>
 </p>

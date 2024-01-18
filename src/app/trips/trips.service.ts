@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../trip';
-import { HttpClient } from '@angular/common/http';
 import { Subject, firstValueFrom } from 'rxjs';
 import { CartService } from '../cart/cart.service';
-import { ApiService } from '../shared/services/api.service';
+import { DbService } from '../shared/services/db.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,7 @@ export class TripsService {
   tripsSubject: Subject<Trip[]> = new Subject();
   trips: Trip[] = [];
 
-  constructor(private httpClient: HttpClient, private cartService: CartService, private apiService: ApiService) {
-    this.tripsSubject.next([]);
+  constructor(private cartService: CartService, private dbService: DbService) {
     this.tripsSubject.subscribe((trips) => {
       this.trips = trips;
     });
@@ -21,30 +19,33 @@ export class TripsService {
   }
 
   refresh() {
-    firstValueFrom(this.apiService.readAllTrips()).then(
+    firstValueFrom(this.dbService.readAllTrips()).then(
       data => {
         this.tripsSubject.next(data);
       }
     );
   }
 
-  addTrip(trip: Trip) {
-    firstValueFrom(this.apiService.createTrip(trip)).then(() => this.refresh());
+  async addTrip(trip: Trip) {
+    await firstValueFrom(this.dbService.createTrip(trip));
+    return this.refresh();
   }
 
-  removeTrip(trip: Trip) {
-    firstValueFrom(this.apiService.deleteTrip(trip.id)).then(() => this.refresh());
+  async removeTrip(trip: Trip) {
+    await firstValueFrom(this.dbService.deleteTrip(trip.id));
+    return this.refresh();
   }
 
-  updateTrip(tripId: string, obj: Object) {
-    firstValueFrom(this.apiService.updateTrip(tripId, obj)).then(() => this.refresh());
+  async updateTrip(tripId: string, obj: Object) {
+    await firstValueFrom(this.dbService.updateTrip(tripId, obj));
+    return this.refresh();
   }
 
   reserveTrip(tripId: string) {
     const trip = this.trips.find(el => el.id === tripId);
-    if (!trip) { console.log("Error reserving trip"); return; };
+    if (!trip) { console.error("Error reserving trip"); return; };
     if (trip.available > 0) {
-      firstValueFrom(this.cartService.addToCart(trip)).then(() => {
+      this.cartService.addToCart(trip).then(() => {
         this.updateTrip(tripId, { available: trip.available - 1 });
       });
     }
@@ -52,9 +53,9 @@ export class TripsService {
 
   cancelTrip(tripId: string) {
     const trip = this.trips.find(el => el.id === tripId);
-    if (!trip) { console.log("Error cancelling trip"); return };
+    if (!trip) { console.error("Error cancelling trip"); return };
     if (trip.capacity > trip.available) {
-      firstValueFrom(this.cartService.removeFromCart(trip)).then(() => {
+      this.cartService.removeFromCart(trip).then(() => {
         this.updateTrip(tripId, { available: trip.available + 1 });
       });
     }

@@ -19,6 +19,12 @@ export class CartComponent {
       this.totalValue = this.calculateTotalValue();
       this.trips = value;
     })
+    this.cartService.checkedTripsSubject.subscribe((trips) => {
+      this.totalValue = 0;
+      for (const cost of trips.map(el => el.cost)) {
+        this.totalValue += cost;
+      }
+    })
   }
 
   handleCheckbox(event: any, trip: Trip) {

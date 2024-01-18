@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, catchError, firstValueFrom, throwError } from 'rxjs';
-import { UserCredentials } from '../../UserCredentials';
-import { Tokens } from '../../Tokens';
+import { BehaviorSubject, Subject, catchError, firstValueFrom, tap, throwError } from 'rxjs';
+import { UserCredentials } from '../../userCredentials';
+import { Tokens } from '../../tokens';
 import { Router } from '@angular/router';
 import { UserDto } from '../../userDto';
 
@@ -11,7 +11,8 @@ import { UserDto } from '../../userDto';
 })
 export class AuthService {
   url: string = "http://localhost:8080/api/";
-  persistance: string = "session";
+  persistance: string = "none";
+  persistanceSubject: Subject<string> = new Subject();
   token: string;
   refresh: string;
   currentUser: UserDto;
@@ -19,6 +20,9 @@ export class AuthService {
   interval: ReturnType<typeof setInterval> | null = null
 
   constructor(private http: HttpClient, private router: Router) {
+    this.persistanceSubject.subscribe((value) => {
+      this.persistance = value;
+    })
     this.isNotLoggedIn.subscribe((value) => {
       if (value === false) {
         this.setRefreshing();
@@ -30,7 +34,24 @@ export class AuthService {
       username: "",
       roles: ["guest"]
     }
-    this.getTokensfromSession();
+    firstValueFrom(this.readPersistanceMode());
+  }
+
+  private readPersistanceMode() {
+    return this.http.get<{ mode: string }>(this.url + "persistance").pipe(
+      tap((res) => {
+        this.persistanceSubject.next(res.mode);
+        this.getTokensfromSession();
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  async setPersistanceMode(value: string) {
+    return firstValueFrom(this.http.post<{ mode: string; }>(this.url + "persistance", { mode: value }, { headers: this.getHeaders() })
+      .pipe(
+        catchError(this.handleError)
+      )).then((res) => this.persistanceSubject.next(res.mode));
   }
 
   private setRefreshing() {

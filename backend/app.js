@@ -5,6 +5,7 @@ import tripsRouter from "./routes/trips.js";
 import reviewsRouter from "./routes/reviews.js";
 import cartRouter from "./routes/cart.js";
 import usersRouter from "./routes/users.js";
+import persistanceRouter from "./routes/persistance.js"
 
 const PORT = process.env.PORT || 8080;
 
@@ -12,7 +13,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: "*",
+        origin: "http://localhost:4200",
         methods: ["GET", "PUT", "POST", "DELETE"],
     })
 );
@@ -24,5 +25,6 @@ app.use("/api/reviews", reviewsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/persistance", persistanceRouter);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

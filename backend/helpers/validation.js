@@ -48,6 +48,14 @@ function isPositiveInt(value) {
     return Number.isInteger(value) && value >= 0;
 }
 
+function isPersistanceMode(value) {
+    return ["local", "session", "none"].includes(value);
+}
+
+export function validatePersistanceMode(value) {
+    if (isPersistanceMode(value)) return true;
+    throw new Error("Invalid persistance mode");
+}
 export function validateFullTrip(trip) {
     if (isId(trip.id) &&
         isName(trip.name) &&

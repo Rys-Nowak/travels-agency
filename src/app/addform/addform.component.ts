@@ -86,8 +86,9 @@ export class AddformComponent {
         available: this.capacity,
         rating: 0
       };
-      this.tripsService.addTrip(newTrip);
       this.router.navigate(['trips']);
+      this.tripsService.addTrip(newTrip)
+        .then(() => window.location.reload());
     } else {
       alert("Invalid data");
     }
